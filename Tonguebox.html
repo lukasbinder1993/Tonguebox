@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tonguebox</title>
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #004499;
+            --text-color: #333;
+            --bg-color: #fff;
+            --button-size: 60px;
+            --gap: 10px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 10px;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--gap);
+            max-width: 100%;
+        }
+        
+        .collapsible {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+        
+        .collapsible-header {
+            background-color: #f1f1f1;
+            padding: 12px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+        
+        .collapsible-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .collapsible.active .collapsible-content {
+            max-height: 500px;
+            padding: 12px;
+        }
+        
+        .text-area {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: vertical;
+        }
+        
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(var(--button-size), 1fr));
+            gap: 8px;
+            margin: 10px 0;
+        }
+        
+        .action-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: var(--button-size);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .action-button:hover, .action-button:focus {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+            outline: 3px solid #ffcc00;
+        }
+        
+        .control-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0;
+        }
+        
+        .control-button {
+            background-color: #e0e0e0;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            flex-grow: 1;
+        }
+        
+        .control-button.active-mode {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .voice-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0;
+        }
+        
+        .voice-option {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            flex-grow: 1;
+            text-align: center;
+        }
+        
+        .voice-option.selected {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .emergency-section {
+            background-color: #ffcccc;
+            border: 2px solid #ff0000;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        .emergency-button {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        /* Status-Anzeige */
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
+        }
+        
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        /* Responsive Anpassungen */
+        @media (min-width: 768px) {
+            :root {
+                --button-size: 70px;
+                --gap: 15px;
+            }
+            
+            .button-grid {
+                grid-template-columns: repeat(auto-fill, minmax(var(--button-size), 1fr));
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            :root {
+                --button-size: 80px;
+                --gap: 20px;
+            }
+            
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            
+            .button-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+        
+        /* iPhone 16 Blickerfassung Optimierungen */
+        @media (max-width: 430px) {
+            :root {
+                --button-size: 65px;
+            }
+            
+            .action-button {
+                font-size: 14px;
+                padding: 10px 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+      
+        
+        <!-- Status-Anzeige -->
+        <div id="status" class="status" style="display: none;"></div>
+        
+        <!-- Notfall-Kommunikation -->
+        <div class="emergency-section">
+            <h2>Notfall-Kommunikation</h2>
+            <p>Im Notfall diesen Bereich nutzen für schnelle Hilfe</p>
+            <div class="button-grid">
+                <button class="action-button emergency-call">Notruf</button>
+                <button class="action-button emergency-help">Hilfe</button>
+                <button class="action-button emergency-pain">Schmerzen</button>
+                <button class="action-button emergency-medical">Arzt</button>
+            </div>
+            <button class="emergency-button">NOTFALL-MELDUNG SENDEN</button>
+        </div>
+        
+        <!-- Text-Eingabe und Wiedergabe -->
+        <div class="collapsible active">
+            <div class="collapsible-header">
+                <span>Text eingeben & vorlesen</span>
+                <span>▼</span>
+            </div>
+            <div class="collapsible-content">
+                <textarea class="text-area" placeholder="Geben Sie hier Ihren Text ein..."></textarea>
+                <div class="control-panel">
+                    <button class="control-button" id="speak-text">Text vorlesen</button>
+                    <button class="control-button" id="clear-text">Löschen</button>
+                    <button class="control-button" id="copy-text">Kopieren</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Schnellaktionen -->
+        <div class="collapsible">
+            <div class="collapsible-header">
+                <span>Schnellaktionen</span>
+                <span>▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="button-grid">
+                    <button class="action-button" data-text="Hallo">Hallo</button>
+                    <button class="action-button" data-text="Ja">Ja</button>
+                    <button class="action-button" data-text="Nein">Nein</button>
+                    <button class="action-button" data-text="Danke">Danke</button>
+                    <button class="action-button" data-text="Bitte">Bitte</button>
+                    <button class="action-button" data-text="Hilfe">Hilfe</button>
+                    <button class="action-button" data-text="Ich habe Schmerzen">Schmerzen</button>
+                    <button class="action-button" data-text="Ich habe Hunger">Hunger</button>
+                    <button class="action-button" data-text="Ich habe Durst">Durst</button>
+                    <button class="action-button" data-text="Toilette">Toilette</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Telefonat-Unterstützung -->
+        <div class="collapsible">
+            <div class="collapsible-header">
+                <span>Telefonat-Unterstützung</span>
+                <span>▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="control-panel">
+                    <button class="control-button active-mode" data-mode="word">Wörter lesen</button>
+                    <button class="control-button" data-mode="letter">Buchstaben lesen</button>
+                </div>
+                <div class="button-grid">
+                    <button class="action-button" data-text="Können Sie das bitte wiederholen?">Wiederholen</button>
+                    <button class="action-button" data-text="Ich verstehe nicht">Verstehe nicht</button>
+                    <button class="action-button" data-text="Können Sie langsamer sprechen?">Langsamer</button>
+                    <button class="action-button" data-text="Einen Moment bitte">Moment</button>
+                    <button class="action-button" data-text="Können Sie das aufschreiben?">Aufschreiben</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sprachnachrichten -->
+        <div class="collapsible">
+            <div class="collapsible-header">
+                <span>Sprachnachrichten</span>
+                <span>▼</span>
+            </div>
+            <div class="collapsible-content">
+                <textarea class="text-area" placeholder="Nachricht für Sprachnachricht..."></textarea>
+                <div class="control-panel">
+                    <button class="control-button" id="record-message">Sprachnachricht erstellen</button>
+                    <button class="control-button" id="share-message">Nachricht teilen</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Einstellungen -->
+        <div class="collapsible">
+            <div class="collapsible-header">
+                <span>Einstellungen</span>
+                <span>▼</span>
+            </div>
+            <div class="collapsible-content">
+                <h3>Stimme auswählen</h3>
+                <div class="voice-selector" id="voice-selector">
+                    <!-- Stimmen werden dynamisch geladen -->
+                </div>
+                
+                <h3>Lesemodus</h3>
+                <div class="control-panel">
+                    <button class="control-button active-mode" data-mode="word">Wörter</button>
+                    <button class="control-button" data-mode="letter">Buchstaben</button>
+                </div>
+                
+                <h3>Sprachausgabe testen</h3>
+                <div class="control-panel">
+                    <button class="control-button" id="test-voice">Test-Stimme</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sprachsynthese-Initialisierung
+        let speechSynthesis = window.speechSynthesis;
+        let currentVoice = null;
+        let readMode = 'word'; // 'word' oder 'letter'
+        let voices = [];
+        
+        // Status-Anzeige
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = 'status ' + type;
+            statusEl.style.display = 'block';
+            
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Stimmen laden
+        function loadVoices() {
+            voices = speechSynthesis.getVoices();
+            const voiceSelector = document.getElementById('voice-selector');
+            voiceSelector.innerHTML = '';
+            
+            if (voices.length === 0) {
+                voiceSelector.innerHTML = '<p>Keine Stimmen verfügbar. Bitte verwenden Sie einen modernen Browser.</p>';
+                return;
+            }
+            
+            // Deutsche Stimmen filtern oder alle anzeigen
+            const germanVoices = voices.filter(voice => voice.lang.includes('de'));
+            const voicesToShow = germanVoices.length > 0 ? germanVoices : voices;
+            
+            voicesToShow.forEach((voice, index) => {
+                const voiceOption = document.createElement('div');
+                voiceOption.classList.add('voice-option');
+                voiceOption.setAttribute('data-voice-index', index);
+                voiceOption.textContent = `${voice.name} (${voice.lang})`;
+                voiceSelector.appendChild(voiceOption);
+            });
+            
+            // Event-Listener für Stimmenauswahl
+            document.querySelectorAll('.voice-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.voice-option').forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    const voiceIndex = parseInt(this.getAttribute('data-voice-index'));
+                    currentVoice = voices[voiceIndex];
+                    
+                    // Stimmeinstellung speichern
+                    localStorage.setItem('selectedVoiceIndex', voiceIndex);
+                    showStatus(`Stimme ausgewählt: ${currentVoice.name}`, 'success');
+                });
+            });
+            
+            // Gespeicherte Stimme laden
+            const savedVoiceIndex = localStorage.getItem('selectedVoiceIndex');
+            if (savedVoiceIndex !== null && voices[savedVoiceIndex]) {
+                currentVoice = voices[savedVoiceIndex];
+                document.querySelector(`.voice-option[data-voice-index="${savedVoiceIndex}"]`).classList.add('selected');
+            } else if (voices.length > 0) {
+                // Standardstimme setzen
+                currentVoice = voices[0];
+                document.querySelector('.voice-option').classList.add('selected');
+            }
+        }
+        
+        // Warten bis Stimmen geladen sind
+        speechSynthesis.onvoiceschanged = loadVoices;
+        
+        // Geräteerkennung
+        function detectDeviceType() {
+            const width = window.innerWidth;
+            if (width < 768) {
+                return 'phone';
+            } else if (width < 1024) {
+                return 'tablet';
+            } else {
+                return 'desktop';
+            }
+        }
+        
+        // Aufklappbare Bereiche
+        document.querySelectorAll('.collapsible-header').forEach(header => {
+            header.addEventListener('click', function() {
+                this.parentElement.classList.toggle('active');
+                const icon = this.querySelector('span:last-child');
+                icon.textContent = this.parentElement.classList.contains('active') ? '▼' : '►';
+            });
+        });
+        
+        // Lesemodus
+        document.querySelectorAll('.control-button[data-mode]').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.control-button[data-mode]').forEach(btn => btn.classList.remove('active-mode'));
+                this.classList.add('active-mode');
+                readMode = this.getAttribute('data-mode');
+                localStorage.setItem('readMode', readMode);
+                showStatus(`Lesemodus: ${readMode === 'word' ? 'Wörter' : 'Buchstaben'}`, 'success');
+            });
+        });
+        
+        // Gespeicherten Lesemodus laden
+        const savedReadMode = localStorage.getItem('readMode');
+        if (savedReadMode) {
+            document.querySelector(`.control-button[data-mode="${savedReadMode}"]`).click();
+        }
+        
+        // Text vorlesen
+        document.getElementById('speak-text').addEventListener('click', function() {
+            const text = document.querySelector('.text-area').value;
+            if (text) {
+                speakText(text);
+            } else {
+                showStatus('Bitte geben Sie zuerst einen Text ein', 'error');
+            }
+        });
+        
+        // Text löschen
+        document.getElementById('clear-text').addEventListener('click', function() {
+            document.querySelector('.text-area').value = '';
+            showStatus('Text gelöscht', 'success');
+        });
+        
+        // Text kopieren
+        document.getElementById('copy-text').addEventListener('click', function() {
+            const textArea = document.querySelector('.text-area');
+            textArea.select();
+            document.execCommand('copy');
+            showStatus('Text kopiert!', 'success');
+        });
+        
+        // Schnellaktion-Buttons
+        document.querySelectorAll('.action-button[data-text]').forEach(button => {
+            button.addEventListener('click', function() {
+                const text = this.getAttribute('data-text');
+                
+                if (readMode === 'letter') {
+                    // Buchstabenweise lesen
+                    speakLetters(text);
+                } else {
+                    // Normal lesen
+                    speakText(text);
+                }
+                
+                // Text auch ins Textfeld übernehmen
+                document.querySelector('.text-area').value = text;
+            });
+        });
+        
+        // Notfall-Buttons
+        document.querySelectorAll('.emergency-call, .emergency-help, .emergency-pain, .emergency-medical').forEach(button => {
+            button.addEventListener('click', function() {
+                const text = this.textContent;
+                speakText(text);
+                
+                // Notfall-Nachricht senden (simuliert)
+                showStatus(`NOTFALL: "${text}" wurde an Ihre Kontakte gesendet!`, 'success');
+            });
+        });
+        
+        // Großer Notfall-Button
+        document.querySelector('.emergency-button').addEventListener('click', function() {
+            speakText("Notfall! Bitte helfen Sie mir!");
+            showStatus("NOTFALL-MELDUNG wurde an Ihre Notfallkontakte gesendet!", 'success');
+        });
+        
+        // Sprachnachricht erstellen
+        document.getElementById('record-message').addEventListener('click', function() {
+            const text = document.querySelectorAll('.text-area')[1].value;
+            if (text) {
+                speakText(text);
+                showStatus("Sprachnachricht wurde erstellt und kann jetzt geteilt werden!", 'success');
+            } else {
+                showStatus("Bitte geben Sie zuerst eine Nachricht ein!", 'error');
+            }
+        });
+        
+        // Nachricht teilen
+        document.getElementById('share-message').addEventListener('click', function() {
+            const text = document.querySelectorAll('.text-area')[1].value;
+            if (text) {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Meine Sprachnachricht',
+                        text: text
+                    }).then(() => {
+                        showStatus('Nachricht erfolgreich geteilt', 'success');
+                    }).catch(error => {
+                        showStatus('Fehler beim Teilen: ' + error, 'error');
+                    });
+                } else {
+                    navigator.clipboard.writeText(text);
+                    showStatus("Teilen-Funktion nicht verfügbar. Text wurde in die Zwischenablage kopiert.", 'success');
+                }
+            } else {
+                showStatus("Bitte geben Sie zuerst eine Nachricht ein!", 'error');
+            }
+        });
+        
+        // Test-Stimme
+        document.getElementById('test-voice').addEventListener('click', function() {
+            speakText("Das ist eine Testnachricht. Die Sprachausgabe funktioniert einwandfrei.");
+        });
+        
+        // Text vorlesen Funktion
+        function speakText(text) {
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+            }
+            
+            // Prüfen ob Stimmen verfügbar sind
+            if (voices.length === 0) {
+                showStatus('Keine Stimmen verfügbar. Bitte warten Sie einen Moment.', 'error');
+                // Nochmal versuchen, Stimmen zu laden
+                loadVoices();
+                return;
+            }
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'de-DE';
+            utterance.rate = 0.9;
+            utterance.pitch = 1;
+            
+            // Ausgewählte Stimme verwenden
+            if (currentVoice) {
+                utterance.voice = currentVoice;
+            }
+            
+            utterance.onstart = function() {
+                showStatus('Sprachausgabe startet...', 'success');
+            };
+            
+            utterance.onend = function() {
+                showStatus('Sprachausgabe beendet', 'success');
+            };
+            
+            utterance.onerror = function(event) {
+                showStatus('Fehler bei der Sprachausgabe: ' + event.error, 'error');
+            };
+            
+            speechSynthesis.speak(utterance);
+        }
+        
+        // Buchstabenweise vorlesen
+        function speakLetters(text) {
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+            }
+            
+            const letters = text.split('');
+            let index = 0;
+            
+            function speakNextLetter() {
+                if (index < letters.length) {
+                    const utterance = new SpeechSynthesisUtterance(letters[index]);
+                    utterance.lang = 'de-DE';
+                    utterance.rate = 0.5;
+                    
+                    // Ausgewählte Stimme verwenden
+                    if (currentVoice) {
+                        utterance.voice = currentVoice;
+                    }
+                    
+                    utterance.onend = function() {
+                        index++;
+                        setTimeout(speakNextLetter, 200);
+                    };
+                    
+                    speechSynthesis.speak(utterance);
+                }
+            }
+            
+            speakNextLetter();
+        }
+        
+        // Initialisierung bei Laden der Seite
+        window.addEventListener('load', function() {
+            const deviceType = detectDeviceType();
+            console.log(`Erkanntes Gerät: ${deviceType}`);
+            
+            // Gerätespezifische Anpassungen
+            if (deviceType === 'phone') {
+                document.body.style.fontSize = '16px';
+            } else if (deviceType === 'tablet') {
+                document.body.style.fontSize = '18px';
+            } else {
+                document.body.style.fontSize = '20px';
+            }
+            
+            // Stimmen laden
+            loadVoices();
+            
+            // Hinweis anzeigen, falls keine Stimmen verfügbar
+            setTimeout(() => {
+                if (voices.length === 0) {
+                    showStatus('Lade verfügbare Stimmen...', 'success');
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
