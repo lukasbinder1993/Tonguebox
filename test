@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimative Kommunikationshilfe</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #3b82f6;
+            --accent-color: #1d4ed8;
+            --text-color: #1f2937;
+            --light-color: #f8fafc;
+            --danger-color: #dc2626;
+            --success-color: #16a34a;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            color: var(--text-color);
+            background-color: white;
+            line-height: 1.6;
+            padding: 10px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        /* Responsive Anpassungen */
+        .desktop-view { display: block; }
+        .tablet-view { display: none; }
+        .mobile-view { display: none; }
+
+        @media (max-width: 1024px) {
+            .desktop-view { display: none; }
+            .tablet-view { display: block; }
+        }
+
+        @media (max-width: 768px) {
+            .tablet-view { display: none; }
+            .mobile-view { display: block; }
+            
+            /* Für Blickerfassung am iPhone: größere Buttons */
+            .quick-button, .voice-btn, .nav-btn {
+                min-height: 70px;
+                font-size: 1.2rem;
+            }
+            
+            .text-input {
+                min-height: 150px;
+            }
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+
+        /* Hauptcontainer */
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Klappbare Bereiche */
+        .collapsible-section {
+            border: 1px solid #e5e7eb;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-header {
+            background-color: #f1f5f9;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .section-header:hover {
+            background-color: #e2e8f0;
+        }
+
+        .section-header h2 {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-content {
+            padding: 20px;
+            display: block;
+        }
+
+        .collapsed .section-content {
+            display: none;
+        }
+
+        /* Textbereich */
+        .text-section {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 768px) {
+            .text-section {
+                grid-column: span 1;
+            }
+        }
+
+        .text-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .text-input {
+            width: 100%;
+            min-height: 180px;
+            padding: 20px;
+            border: 2px solid #d1d5db;
+            border-radius: var(--border-radius);
+            font-size: 1.2rem;
+            resize: vertical;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .text-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #e5e7eb;
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #d1d5db;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        /* Schnellaktion Buttons */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .quick-button {
+            padding: 18px 12px;
+            background-color: #f0f9ff;
+            border: 2px solid #bae6fd;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .quick-button:hover {
+            background-color: #e0f2fe;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .quick-button i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        /* Stimmen Auswahl */
+        .voice-selection {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .voice-btn {
+            padding: 12px 18px;
+            background-color: #f8fafc;
+            border: 2px solid #cbd5e1;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .voice-btn.active {
+            background-color: #dbeafe;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Notfall Tool */
+        .emergency-tool {
+            background-color: #fef2f2;
+            border: 2px solid #fecaca;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .emergency-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--danger-color);
+        }
+
+        .emergency-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .emergency-btn {
+            padding: 20px 15px;
+            background-color: var(--danger-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .emergency-btn:hover {
+            background-color: #b91c1c;
+            transform: scale(1.05);
+        }
+
+        /* Telefonat Modus */
+        .call-mode {
+            background-color: #f0fdf4;
+            border: 2px solid #bbf7d0;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .call-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--success-color);
+        }
+
+        .call-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        /* Sprachnachrichten */
+        .voice-message-section {
+            background-color: #faf5ff;
+            border: 2px solid #e9d5ff;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .recording-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .recording-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .record-btn {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .stop-btn {
+            background-color: #6b7280;
+            color: white;
+        }
+
+        .send-btn {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .recording-status {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        .recording {
+            color: var(--danger-color);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* Blickerfassung Optimierung */
+        .gaze-optimized {
+            position: relative;
+        }
+
+        .gaze-optimized::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: calc(var(--border-radius) + 5px);
+            border: 3px solid transparent;
+            transition: var(--transition);
+        }
+
+        .gaze-optimized:hover::after,
+        .gaze-optimized:focus::after {
+            border-color: rgba(37, 99, 235, 0.3);
+        }
+
+        /* Fußzeile */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        /* Hilfsklassen */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-20 {
+            margin-top: 20px;
+        }
+
+        .mb-10 {
+            margin-bottom: 10px;
+        }
+
+        .icon {
+            font-size: 1.3rem;
+        }
+
+        /* Toggle Switch */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e1;
+            border-radius: 34px;
+            transition: var(--transition);
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1><i class="fas fa-comments"></i> Ultimative Kommunikationshilfe</h1>
+        <p>Mit KI-Unterstützung, Blickerfassungskompatibilität und Notfallfunktionen</p>
+        <div class="device-indicator">
+            <span class="desktop-view"><i class="fas fa-desktop"></i> Desktop-Ansicht</span>
+            <span class="tablet-view"><i class="fas fa-tablet-alt"></i> Tablet-Ansicht</span>
+            <span class="mobile-view"><i class="fas fa-mobile-alt"></i> Mobile-Ansicht (optimiert für Blickerfassung)</span>
+        </div>
+    </div>
+
+    <!-- Hauptcontainer -->
+    <div class="container">
+        <!-- Schnellaktionen Bereich -->
+        <div class="collapsible-section">
+            <div class="section-header">
+                <h2><i class="fas fa-bolt"></i> Schnellaktionen</h2>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="section-content">
+                <p class="mb-10">Wichtige Phrasen mit einem Klick/Blick sprechen:</p>
+                <div class="quick-actions">
+                    <div class="quick-button gaze-optimized" data-text="Hallo, wie geht es dir?">
+                        <i class="fas fa-hand-wave"></i>
+                        <span>Hallo</span>
+                    </div>
+                    <div class="quick-button gaze-optimized" data-text="Ja, das stimmt.">
+                        <i class="fas fa-thumbs-up"></i>
+                        <span>Ja</span>
+                    </div>
+                    <div class="quick-button gaze-optimized" data-text="Nein, das möchte ich nicht.">
+                        <i class="fas fa-thumbs-down"></i>
+                        <span>Nein</span>
+                    </div>
+                    <div class="quick-button gaze-optimized" data-text="Danke für deine Hilfe.">
+                        <i class="fas fa-heart"></i>
+                        <span>Danke</span>
+                    </div>
+                    <div class="quick-button gaze-optimized" data-text="Kannst du mir bitte helfen?">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Hilfe</span>
+                    </div>
+                    <div class="quick-button gaze-optimized" data-text="Ich habe Schmerzen.">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Schmerzen</span>
+                    </div>
+                    <div class="quick-button gaze-optimized" data-text="Ich habe Hunger.">
+                        <i class="fas fa-utensils"></i>
+                        <span>Hunger</span>
+                    </div>
+                    <div class="quick-button gaze-optimized" data-text="Ich habe Durst.">
+                        <i class="fas fa-glass-water"></i>
+                        <span>Durst</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Textbereich -->
+        <div class="collapsible-section text-section">
+            <div class="section-header">
+                <h2><i class="fas fa-edit"></i> Texteingabe & Vorlesen</h2>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="section-content">
+                <div class="text-container">
+                    <textarea class="text-input gaze-optimized" placeholder="Geben Sie hier Ihren Text ein...">Hallo! Ich verwende diese Kommunikationshilfe, um mit dir zu sprechen.</textarea>
+                    
+                    <div class="toggle-container">
+                        <span>Wörter vorlesen</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="letterModeToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span>Buchstaben vorlesen</span>
+                    </div>
+                    
+                    <div class="text-controls">
+                        <button class="btn btn-primary gaze-optimized" id="speakTextBtn">
+                            <i class="fas fa-volume-up"></i> Text vorlesen
+                        </button>
+                        <button class="btn btn-secondary gaze-optimized" id="clearTextBtn">
+                            <i class="fas fa-eraser"></i> Löschen
+                        </button>
+                        <button class="btn btn-success gaze-optimized" id="saveTextBtn">
+                            <i class="fas fa-save"></i> Speichern
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stimmen Auswahl -->
+        <div class="collapsible-section">
+            <div class="section-header">
+                <h2><i class="fas fa-user-voice"></i> Stimmenauswahl</h2>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="section-content">
+                <p>Wählen Sie eine Vorlesestimme (bleibt nach Benutzung aktiv):</p>
+                <div class="voice-selection">
+                    <button class="voice-btn active gaze-optimized" data-voice="female1">
+                        <i class="fas fa-female"></i> Anna (weiblich)
+                    </button>
+                    <button class="voice-btn gaze-optimized" data-voice="male1">
+                        <i class="fas fa-male"></i> Thomas (männlich)
+                    </button>
+                    <button class="voice-btn gaze-optimized" data-voice="female2">
+                        <i class="fas fa-female"></i> Lena (weiblich)
+                    </button>
+                    <button class="voice-btn gaze-optimized" data-voice="male2">
+                        <i class="fas fa-male"></i> Klaus (männlich)
+                    </button>
+                </div>
+                <p class="mt-20"><small><i class="fas fa-info-circle"></i> Die ausgewählte Stimme bleibt auch nach dem Vorlesen aktiv und wird nicht zurückgesetzt.</small></p>
+            </div>
+        </div>
+
+        <!-- Telefonat-Modus -->
+        <div class="collapsible-section">
+            <div class="section-header">
+                <h2><i class="fas fa-phone-alt"></i> Telefonat-Modus</h2>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="section-content">
+                <div class="call-mode">
+                    <div class="call-header">
+                        <i class="fas fa-phone-volume icon"></i>
+                        <h3>Schnellkommunikation während Telefonaten</h3>
+                    </div>
+                    <p class="text-center">Wichtige Sätze für Telefonate:</p>
+                    <div class="call-buttons">
+                        <button class="btn btn-primary gaze-optimized" data-text="Können Sie das bitte wiederholen?">
+                            <i class="fas fa-redo"></i> Wiederholen
+                        </button>
+                        <button class="btn btn-primary gaze-optimized" data-text="Können Sie bitte langsamer sprechen?">
+                            <i class="fas fa-tachometer-alt"></i> Langsamer
+                        </button>
+                        <button class="btn btn-primary gaze-optimized" data-text="Ich verstehe nicht, was Sie meinen.">
+                            <i class="fas fa-question"></i> Verstehe nicht
+                        </button>
+                        <button class="btn btn-primary gaze-optimized" data-text="Können Sie das bitte aufschreiben oder senden?">
+                            <i class="fas fa-envelope"></i> Aufschreiben
+                        </button>
+                    </div>
+                    <div class="text-center mt-20">
+                        <button class="btn btn-success gaze-optimized" id="activateCallMode">
+                            <i class="fas fa-phone"></i> Telefonat-Modus aktivieren
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sprachnachrichten -->
+        <div class="collapsible-section">
+            <div class="section-header">
+                <h2><i class="fas fa-microphone-alt"></i> Sprachnachrichten</h2>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="section-content">
+                <div class="voice-message-section">
+                    <p class="text-center">Aufnahme von Sprachnachrichten zum Versand über andere Apps:</p>
+                    
+                    <div class="recording-controls">
+                        <button class="recording-btn record-btn gaze-optimized" id="recordBtn">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <button class="recording-btn stop-btn gaze-optimized hidden" id="stopBtn">
+                            <i class="fas fa-stop"></i>
+                        </button>
+                        <button class="recording-btn send-btn gaze-optimized hidden" id="sendBtn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="recording-status">
+                        <p id="recordingStatus">Bereit zur Aufnahme</p>
+                        <p id="recordingTimer" class="hidden">00:00</p>
+                    </div>
+                    
+                    <div class="text-center mt-20">
+                        <button class="btn btn-secondary gaze-optimized" id="shareAudioBtn">
+                            <i class="fas fa-share-alt"></i> Audio teilen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notfall-Kommunikation -->
+        <div class="collapsible-section">
+            <div class="section-header">
+                <h2><i class="fas fa-first-aid"></i> Notfall-Kommunikation</h2>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="section-content">
+                <div class="emergency-tool">
+                    <div class="emergency-header">
+                        <i class="fas fa-exclamation-triangle icon"></i>
+                        <h3>Schnelle Notfall-Kommunikation</h3>
+                    </div>
+                    <p class="text-center">Bei dringenden Situationen:</p>
+                    
+                    <div class="emergency-buttons">
+                        <button class="emergency-btn gaze-optimized" data-text="Hilfe! Ich brauche dringend Hilfe!">
+                            <i class="fas fa-life-ring"></i> HILFE!
+                        </button>
+                        <button class="emergency-btn gaze-optimized" data-text="Rufen Sie bitte einen Krankenwagen!">
+                            <i class="fas fa-ambulance"></i> KRANKENWAGEN
+                        </button>
+                        <button class="emergency-btn gaze-optimized" data-text="Ich habe starke Schmerzen!">
+                            <i class="fas fa-band-aid"></i> SCHMERZEN
+                        </button>
+                        <button class="emergency-btn gaze-optimized" data-text="Bitte rufen Sie meine Kontaktperson an!">
+                            <i class="fas fa-phone"></i> KONTAKT ANRUFEN
+                        </button>
+                    </div>
+                    
+                    <div class="text-center mt-20">
+                        <button class="btn btn-danger gaze-optimized" id="emergencyRepeatBtn">
+                            <i class="fas fa-bullhorn"></i> Notfallmeldung wiederholen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Klappbare Bereiche
+            const sectionHeaders = document.querySelectorAll('.section-header');
+            sectionHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const section = this.parentElement;
+                    section.classList.toggle('collapsed');
+                    const icon = this.querySelector('.fa-chevron-down');
+                    if (section.classList.contains('collapsed')) {
+                        icon.classList.replace('fa-chevron-down', 'fa-chevron-right');
+                    } else {
+                        icon.classList.replace('fa-chevron-right', 'fa-chevron-down');
+                    }
+                });
+            });
+
+            // Sprachsynthese Initialisierung
+            let currentVoice = 'female1';
+            const voices = {
+                female1: { name: 'Anna', lang: 'de-DE', gender: 'female' },
+                male1: { name: 'Thomas', lang: 'de-DE', gender: 'male' },
+                female2: { name: 'Lena', lang: 'de-DE', gender: 'female' },
+                male2: { name: 'Klaus', lang: 'de-DE', gender: 'male' }
+            };
+            
+            let speechSynth = window.speechSynthesis;
+            let isSpeaking = false;
+            
+            // Stimmenauswahl
+            const voiceButtons = document.querySelectorAll('.voice-btn');
+            voiceButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    voiceButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    currentVoice = this.dataset.voice;
+                    
+                    // Speichern der Auswahl im localStorage
+                    localStorage.setItem('selectedVoice', currentVoice);
+                });
+            });
+            
+            // Geladene Stimme aus localStorage wiederherstellen
+            const savedVoice = localStorage.getItem('selectedVoice');
+            if (savedVoice) {
+                currentVoice = savedVoice;
+                voiceButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.voice === savedVoice) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+            
+            // Funktion zum Vorlesen
+            function speakText(text, letterMode = false) {
+                if (isSpeaking) {
+                    speechSynth.cancel();
+                }
+                
+                if (letterMode) {
+                    // Buchstabenweise vorlesen
+                    const letters = text.split('');
+                    let delay = 0;
+                    
+                    letters.forEach((letter, index) => {
+                        setTimeout(() => {
+                            if (letter === ' ') {
+                                // Pause bei Leerzeichen
+                                return;
+                            }
+                            
+                            const utterance = new SpeechSynthesisUtterance(letter);
+                            utterance.lang = voices[currentVoice].lang;
+                            utterance.rate = 0.7;
+                            speechSynth.speak(utterance);
+                            
+                            // Markiere aktuellen Buchstaben im Text
+                            highlightLetter(text, index);
+                        }, delay);
+                        
+                        delay += 300; // 300ms Pause zwischen Buchstaben
+                    });
+                    
+                    // Zurücksetzen der Markierung
+                    setTimeout(() => {
+                        clearHighlight();
+                    }, delay + 300);
+                } else {
+                    // Wortweise vorlesen
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.lang = voices[currentVoice].lang;
+                    utterance.rate = 1.0;
+                    
+                    utterance.onstart = function() {
+                        isSpeaking = true;
+                    };
+                    
+                    utterance.onend = function() {
+                        isSpeaking = false;
+                    };
+                    
+                    speechSynth.speak(utterance);
+                }
+            }
+            
+            // Text markierung für Buchstabenmodus
+            function highlightLetter(text, index) {
+                const textarea = document.querySelector('.text-input');
+                textarea.focus();
+                textarea.setSelectionRange(index, index + 1);
+                
+                // Visuelle Hervorhebung
+                const before = text.substring(0, index);
+                const letter = text.substring(index, index + 1);
+                const after = text.substring(index + 1);
+                
+                // Temporäres HTML für visuelle Hervorhebung
+                textarea.value = before + '[' + letter + ']' + after;
+                
+                // Setze Cursor zurück
+                setTimeout(() => {
+                    textarea.setSelectionRange(index + 1, index + 2);
+                }, 10);
+            }
+            
+            function clearHighlight() {
+                const textarea = document.querySelector('.text-input');
+                const text = textarea.value;
+                textarea.value = text.replace(/\[|\]/g, '');
+            }
+            
+            // Schnellaktion Buttons
+            const quickButtons = document.querySelectorAll('.quick-button, .call-buttons .btn, .emergency-btn');
+            quickButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const text = this.dataset.text;
+                    const letterMode = document.getElementById('letterModeToggle').checked;
+                    speakText(text, letterMode);
+                });
+            });
+            
+            // Text vorlesen Button
+            document.getElementById('speakTextBtn').addEventListener('click', function() {
+                const text = document.querySelector('.text-input').value;
+                const letterMode = document.getElementById('letterModeToggle').checked;
+                
+                if (text.trim() === '') {
+                    alert('Bitte geben Sie einen Text ein oder wählen Sie eine Schnellaktion.');
+                    return;
+                }
+                
+                speakText(text, letterMode);
+            });
+            
+            // Text löschen Button
+            document.getElementById('clearTextBtn').addEventListener('click', function() {
+                document.querySelector('.text-input').value = '';
+            });
+            
+            // Text speichern Button
+            document.getElementById('saveTextBtn').addEventListener('click', function() {
+                const text = document.querySelector('.text-input').value;
+                if (text.trim() === '') {
+                    alert('Bitte geben Sie einen Text zum Speichern ein.');
+                    return;
+                }
+                
+                localStorage.setItem('savedText', text);
+                alert('Text wurde gespeichert!');
+            });
+            
+            // Geladenen Text wiederherstellen
+            const savedText = localStorage.getItem('savedText');
+            if (savedText) {
+                document.querySelector('.text-input').value = savedText;
+            }
+            
+            // Sprachnachrichten Funktionen
+            let mediaRecorder;
+            let audioChunks = [];
+            let isRecording = false;
+            let recordingTimer;
+            let seconds = 0;
+            
+            const recordBtn = document.getElementById('recordBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            const sendBtn = document.getElementById('sendBtn');
+            const recordingStatus = document.getElementById('recordingStatus');
+            const recordingTimerElement = document.getElementById('recordingTimer');
+            
+            recordBtn.addEventListener('click', async function() {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    
+                    mediaRecorder.start();
+                    isRecording = true;
+                    
+                    // UI aktualisieren
+                    recordBtn.classList.add('hidden');
+                    stopBtn.classList.remove('hidden');
+                    recordingStatus.textContent = 'Aufnahme läuft...';
+                    recordingStatus.classList.add('recording');
+                    recordingTimerElement.classList.remove('hidden');
+                    
+                    // Timer starten
+                    seconds = 0;
+                    recordingTimer = setInterval(() => {
+                        seconds++;
+                        const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+                        const secs = (seconds % 60).toString().padStart(2, '0');
+                        recordingTimerElement.textContent = `${mins}:${secs}`;
+                    }, 1000);
+                    
+                    audioChunks = [];
+                    
+                    mediaRecorder.addEventListener('dataavailable', event => {
+                        audioChunks.push(event.data);
+                    });
+                    
+                    mediaRecorder.addEventListener('stop', () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        
+                        // Audio-URL für den Sendebutton speichern
+                        sendBtn.dataset.audioUrl = audioUrl;
+                        
+                        // Sendebutton anzeigen
+                        sendBtn.classList.remove('hidden');
+                        
+                        // Aufnahmestatus aktualisieren
+                        recordingStatus.textContent = 'Aufnahme fertig. Senden oder erneut aufnehmen.';
+                        recordingStatus.classList.remove('recording');
+                    });
+                } catch (error) {
+                    alert('Fehler beim Zugriff auf das Mikrofon: ' + error.message);
+                }
+            });
+            
+            stopBtn.addEventListener('click', function() {
+                if (mediaRecorder && isRecording) {
+                    mediaRecorder.stop();
+                    isRecording = false;
+                    
+                    // Timer stoppen
+                    clearInterval(recordingTimer);
+                    
+                    // UI aktualisieren
+                    stopBtn.classList.add('hidden');
+                    recordBtn.classList.remove('hidden');
+                }
+            });
+            
+            sendBtn.addEventListener('click', function() {
+                const audioUrl = this.dataset.audioUrl;
+                if (!audioUrl) {
+                    alert('Keine Aufnahme zum Senden vorhanden.');
+                    return;
+                }
+                
+                // Hier würde normalerweise die Integration mit Messaging-Apps erfolgen
+                // Für das Beispiel zeigen wir einen Download-Link an
+                const a = document.createElement('a');
+                a.href = audioUrl;
+                a.download = 'sprachnachricht.wav';
+                a.textContent = 'Sprachnachricht herunterladen';
+                a.className = 'btn btn-primary mt-20';
+                
+                // Alten Link entfernen falls vorhanden
+                const oldLink = document.querySelector('.download-link');
+                if (oldLink) oldLink.remove();
+                
+                // Neuen Link einfügen
+                a.classList.add('download-link');
+                sendBtn.parentElement.appendChild(a);
+                
+                alert('Sprachnachricht ist bereit zum Teilen über andere Apps!');
+            });
+            
+            // Audio teilen Button
+            document.getElementById('shareAudioBtn').addEventListener('click', function() {
+                if (!navigator.share) {
+                    alert('Die Teilen-Funktion wird von Ihrem Browser nicht unterstützt.');
+                    return;
+                }
+                
+                // Für dieses Beispiel erstellen wir eine Dummy-Audio-Datei
+                const dummyAudioUrl = 'https://www.soundjay.com/buttons/beep-07.wav';
+                
+                navigator.share({
+                    title: 'Meine Sprachnachricht',
+                    text: 'Ich habe eine Sprachnachricht aufgenommen',
+                    url: dummyAudioUrl
+                })
+                .then(() => console.log('Erfolgreich geteilt'))
+                .catch(error => console.log('Fehler beim Teilen:', error));
+            });
+            
+            // Telefonat-Modus aktivieren
+            document.getElementById('activateCallMode').addEventListener('click', function() {
+                alert('Telefonat-Modus aktiviert! Die Schnellbuttons für Telefonate sind jetzt priorisiert.');
+                
+                // Visuelle Rückmeldung
+                this.innerHTML = '<i class="fas fa-phone"></i> Telefonat-Modus AKTIV';
+                this.classList.remove('btn-success');
+                this.classList.add('btn-danger');
+                
+                // Nach 30 Sekunden zurücksetzen
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-phone"></i> Telefonat-Modus aktivieren';
+                    this.classList.remove('btn-danger');
+                    this.classList.add('btn-success');
+                }, 30000);
+            });
+            
+            // Notfallmeldung wiederholen
+            document.getElementById('emergencyRepeatBtn').addEventListener('click', function() {
+                const emergencyText = "Hilfe! Ich brauche dringend Hilfe!";
+                speakText(emergencyText);
+                
+                // Visuelle Rückmeldung
+                this.innerHTML = '<i class="fas fa-bullhorn"></i> WIEDERHOLT...';
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-bullhorn"></i> Notfallmeldung wiederholen';
+                }, 3000);
+            });
+            
+            // Blickerfassungs-Unterstützung: Tastatur-Navigation
+            document.addEventListener('keydown', function(event) {
+                // Nur wenn die Blickerfassung aktiv ist (hier simuliert mit Strg+Alt)
+                if (event.ctrlKey && event.altKey) {
+                    switch(event.key) {
+                        case 'ArrowRight':
+                            navigateFocus('next');
+                            break;
+                        case 'ArrowLeft':
+                            navigateFocus('prev');
+                            break;
+                        case 'Enter':
+                            activateFocusedElement();
+                            break;
+                    }
+                }
+            });
+            
+            let currentFocusIndex = 0;
+            const focusableElements = document.querySelectorAll('.gaze-optimized, button, textarea');
+            
+            function navigateFocus(direction) {
+                if (direction === 'next') {
+                    currentFocusIndex = (currentFocusIndex + 1) % focusableElements.length;
+                } else {
+                    currentFocusIndex = (currentFocusIndex - 1 + focusableElements.length) % focusableElements.length;
+                }
+                
+                focusableElements[currentFocusIndex].focus();
+                focusableElements[currentFocusIndex].classList.add('active-focus');
+                
+                // Entferne aktive Fokus-Klasse von anderen Elementen
+                focusableElements.forEach((el, index) => {
+                    if (index !== currentFocusIndex) {
+                        el.classList.remove('active-focus');
+                    }
+                });
+            }
+            
+            function activateFocusedElement() {
+                if (focusableElements[currentFocusIndex]) {
+                    focusableElements[currentFocusIndex].click();
+                }
+            }
+            
+            // Initialisiere erstes fokussierbares Element
+            if (focusableElements.length > 0) {
+                focusableElements[0].classList.add('active-focus');
+            }
+            
+            // Füge CSS für aktiven Fokus hinzu (für Blickerfassung)
+            const style = document.createElement('style');
+            style.textContent = `
+                .active-focus {
+                    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.7) !important;
+                    transform: scale(1.05) !important;
+                    z-index: 10;
+                }
+                
+                @media (max-width: 768px) {
+                    /* Größere Berührungsziele für Mobile/Blickerfassung */
+                    button, .quick-button, .voice-btn {
+                        min-height: 65px !important;
+                    }
+                    
+                    .text-input {
+                        font-size: 1.3rem !important;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
