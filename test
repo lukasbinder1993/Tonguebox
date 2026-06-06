@@ -2,1332 +2,521 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Ultimative Kommunikationshilfe - Blickerfassungsoptimiert</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Lernende KI-Kommunikationshilfe | Personalisiert & Kontextbewusst</title>
     <style>
-        /* GLOBALE BLICKERFASSUNGS-OPTIMIERUNG */
-        :root {
-            --primary-color: #2563eb;
-            --secondary-color: #3b82f6;
-            --accent-color: #1d4ed4;
-            --text-color: #1f2937;
-            --light-color: #f8fafc;
-            --danger-color: #dc2626;
-            --success-color: #16a34a;
-            --warning-color: #f59e0b;
-            --border-radius: 16px;
-            --focus-glow: 0 0 0 6px rgba(37, 99, 235, 0.7);
-            --focus-glow-alt: 0 0 0 6px rgba(220, 38, 38, 0.7);
-            --focus-glow-success: 0 0 0 6px rgba(22, 163, 74, 0.7);
-            --transition: all 0.2s ease;
-        }
-
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-            color: var(--text-color);
-            background-color: white;
-            line-height: 1.5;
-            padding: 15px;
-            max-width: 1400px;
-            margin: 0 auto;
-            min-height: 100vh;
-        }
-
-        /* BASIS-BLICKERFASSUNG FÜR ALLES */
-        *:focus {
-            outline: none !important;
-        }
-
-        /* BLICKERFASSUNGS-FOKUS FÜR ALLE INTERAKTIVEN ELEMENTE */
-        button, 
-        .quick-button, 
-        .voice-btn, 
-        .section-header,
-        .text-input,
-        .toggle-switch,
-        .recording-btn,
-        .emergency-btn,
-        .download-link,
-        .gaze-target,
-        [data-text],
-        .btn,
-        .call-buttons button,
-        a,
-        .active-focus,
-        [role="button"],
-        .clickable {
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-            transition: var(--transition);
-            position: relative;
-            z-index: 1;
-            border: 2px solid transparent;
-        }
-
-        /* FOKUS-ZUSTAND FÜR BLICKERFASSUNG */
-        .gaze-focused {
-            border: 4px solid var(--primary-color) !important;
-            box-shadow: var(--focus-glow) !important;
-            transform: scale(1.02) !important;
-            z-index: 1000 !important;
-            position: relative;
-            background-color: #ffffff !important;
-            transition: all 0.1s ease;
-        }
-
-        .gaze-focused-emergency {
-            border: 4px solid var(--danger-color) !important;
-            box-shadow: var(--focus-glow-alt) !important;
-            transform: scale(1.02) !important;
-            z-index: 1000 !important;
-        }
-
-        .gaze-focused-success {
-            border: 4px solid var(--success-color) !important;
-            box-shadow: var(--focus-glow-success) !important;
-            transform: scale(1.02) !important;
-            z-index: 1000 !important;
-        }
-
-        /* HOVER-EFFEKTE (optional für Maus) */
-        .gaze-hover {
-            background-color: #f0f9ff !important;
-            transform: scale(1.01);
-        }
-
-        /* GRUNDLEGENDE GRÖßEN FÜR BLICKERFASSUNG */
-        button, 
-        .quick-button, 
-        .voice-btn, 
-        .section-header,
-        .recording-btn,
-        .emergency-btn,
-        .btn,
-        .call-buttons button,
-        .download-link {
-            min-height: 65px !important;
-            min-width: 65px !important;
-            padding: 16px 20px !important;
-            font-size: 1.2rem !important;
-            margin: 4px !important;
-            border-radius: var(--border-radius) !important;
-        }
-
-        /* EXTRA GROß FÜR MOBILE/BLICKERFASSUNG */
-        @media (max-width: 768px) {
-            button, 
-            .quick-button, 
-            .voice-btn, 
-            .section-header,
-            .recording-btn,
-            .emergency-btn,
-            .btn,
-            .call-buttons button,
-            .download-link {
-                min-height: 80px !important;
-                min-width: 80px !important;
-                font-size: 1.4rem !important;
-                padding: 20px 24px !important;
-                margin: 6px !important;
-            }
-            
-            .text-input {
-                min-height: 200px !important;
-                font-size: 1.5rem !important;
-                padding: 25px !important;
-            }
-            
-            i, .icon {
-                font-size: 2rem !important;
-            }
-        }
-
-        /* SPEZIELL FÜR IPHONE 16 */
-        @media (max-width: 390px) {
-            button, 
-            .quick-button, 
-            .voice-btn, 
-            .section-header,
-            .recording-btn,
-            .emergency-btn,
-            .btn {
-                min-height: 90px !important;
-                min-width: 90px !important;
-                font-size: 1.6rem !important;
-            }
-        }
-
-        /* ABSTÄNDE FÜR BESSERE BLICKERFASSUNG */
-        .container, 
-        .quick-actions, 
-        .voice-selection,
-        .call-buttons,
-        .emergency-buttons,
-        .text-controls,
-        .recording-controls {
-            gap: 15px !important;
-            padding: 10px !important;
-        }
-
-        /* VISUELLE MARKIERUNGEN */
-        .gaze-indicator {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            width: 30px;
-            height: 30px;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            font-weight: bold;
-            z-index: 1001;
-            border: 3px solid white;
-        }
-
-        /* PROGRESS-BAR FÜR BLICKVERWEILDAUER */
-        .gaze-progress {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 6px;
-            background-color: var(--primary-color);
-            width: 0%;
-            transition: width 0.1s linear;
-            border-radius: 0 0 var(--border-radius) var(--border-radius);
-            z-index: 1002;
-        }
-
-        /* RESTLICHES STYLING */
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 3px solid #e5e7eb;
-        }
-
-        .header h1 {
-            color: var(--primary-color);
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .device-indicator {
-            font-size: 1.2rem;
-            background-color: #f1f5f9;
+            margin: 0;
             padding: 12px;
-            border-radius: var(--border-radius);
-            display: inline-block;
+            background: transparent;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            touch-action: manipulation;
         }
 
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
+        .app {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
-        /* KOPFZEILEN AUCH ANWÄHLBAR */
-        .section-header {
-            background-color: #f1f5f9;
-            padding: 20px !important;
+        /* Karten */
+        .card {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 48px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 1.4rem !important;
-            font-weight: bold;
-        }
-
-        .section-header h2 {
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .section-content {
-            padding: 25px;
-        }
-
-        .collapsed .section-content {
-            display: none;
-        }
-
-        .text-input {
-            width: 100%;
-            min-height: 200px;
-            padding: 25px;
-            border: 3px solid #d1d5db;
-            border-radius: var(--border-radius);
-            font-size: 1.3rem;
-            resize: vertical;
-            font-family: inherit;
-        }
-
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 15px;
-        }
-
-        .quick-button {
-            background-color: #f0f9ff;
-            border: 3px solid #bae6fd;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            padding: 18px 24px;
+            background: #f8f8fc;
             font-weight: 600;
+            font-size: 1.4rem;
+            cursor: pointer;
+            min-height: 80px;
+        }
+        .card-header:active { background: #e9e9ef; }
+        .toggle-icon { font-size: 2rem; width: 48px; text-align: center; }
+        .card-content { padding: 20px 18px; display: block; }
+
+        /* Riesen-Buttons & Eingabe */
+        .gaze-btn {
+            background: #1c1c1e;
+            color: white;
+            border: none;
+            border-radius: 80px;
+            padding: 16px 22px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            min-height: 74px;
+            min-width: 110px;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: 0.05s linear;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .gaze-btn:active { transform: scale(0.96); background: #3a3a3e; }
+        .button-row { display: flex; flex-wrap: wrap; gap: 14px; margin: 12px 0; align-items: center; }
+
+        .big-textfield {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.4rem;
+            border-radius: 48px;
+            border: 2px solid #ccc;
+            background: white;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 140px;
         }
 
-        .voice-selection {
+        /* Autocomplete Vorschläge */
+        .autocomplete-suggestions {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 12px;
+            margin: 12px 0 0;
         }
-
-        .voice-btn {
-            background-color: #f8fafc;
-            border: 3px solid #cbd5e1;
-            flex: 1 1 150px;
-            font-weight: 600;
-        }
-
-        .voice-btn.active {
-            background-color: #dbeafe;
-            border-color: var(--primary-color);
-            box-shadow: var(--focus-glow);
-        }
-
-        .call-mode, .voice-message-section, .emergency-tool {
-            border-radius: var(--border-radius);
-            padding: 25px;
-        }
-
-        .call-mode {
-            background-color: #f0fdf4;
-            border: 3px solid #bbf7d0;
-        }
-
-        .voice-message-section {
-            background-color: #faf5ff;
-            border: 3px solid #e9d5ff;
-        }
-
-        .emergency-tool {
-            background-color: #fef2f2;
-            border: 3px solid #fecaca;
-        }
-
-        .emergency-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .emergency-btn {
-            background-color: var(--danger-color);
-            color: white;
-            font-weight: bold;
-            font-size: 1.3rem !important;
-            border: none;
-        }
-
-        .recording-controls {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin: 20px 0;
-        }
-
-        .recording-btn {
-            width: 100px !important;
-            height: 100px !important;
-            border-radius: 50% !important;
-            font-size: 2rem !important;
-        }
-
-        .record-btn {
-            background-color: var(--danger-color);
-            color: white;
-        }
-
-        .stop-btn {
-            background-color: #6b7280;
-            color: white;
-        }
-
-        .send-btn {
-            background-color: var(--success-color);
-            color: white;
-        }
-
-        .toggle-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 100px;
-            height: 50px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #cbd5e1;
-            border-radius: 50px;
-            transition: var(--transition);
-        }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 42px;
-            width: 42px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            border-radius: 50%;
-            transition: var(--transition);
-        }
-
-        input:checked + .toggle-slider {
-            background-color: var(--primary-color);
-        }
-
-        input:checked + .toggle-slider:before {
-            transform: translateX(50px);
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            border-top: 3px solid #e5e7eb;
+        .suggestion-chip {
+            background: #e0e0e6;
+            border-radius: 60px;
+            padding: 12px 22px;
             font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.05s linear;
+            touch-action: manipulation;
         }
+        .suggestion-chip:active { background: #c0c0c6; transform: scale(0.96); }
 
-        .hidden {
-            display: none !important;
+        /* KI-Phrasen Panel */
+        .phrase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 14px;
+            margin: 16px 0;
         }
-
-        .recording {
-            color: var(--danger-color);
-            font-weight: bold;
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        #recordingTimer {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        .status-message {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--primary-color);
+        .phrase-btn {
+            background: #2c6e9e;
             color: white;
-            padding: 20px 40px;
-            border-radius: 50px;
-            font-size: 1.3rem;
-            z-index: 2000;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            display: none;
-        }
-
-        .status-message.show {
-            display: block;
-        }
-
-        /* TASTATUR-SHORTCUTS ANZEIGEN */
-        .shortcut-info {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: rgba(0,0,0,0.7);
-            color: white;
-            padding: 15px;
-            border-radius: var(--border-radius);
+            border: none;
+            border-radius: 60px;
+            padding: 14px;
             font-size: 1rem;
-            z-index: 1000;
+            min-height: 70px;
         }
+
+        .context-bar {
+            background: #eef2ff;
+            border-radius: 60px;
+            padding: 12px 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .context-badge {
+            background: #4f6f8f;
+            color: white;
+            border-radius: 40px;
+            padding: 8px 18px;
+            font-size: 0.9rem;
+        }
+        select, .small-select {
+            background: white;
+            border-radius: 60px;
+            padding: 12px 18px;
+            font-size: 1rem;
+            border: 1px solid #aaa;
+        }
+
+        .voice-panel {
+            background: #f0f0f4;
+            border-radius: 80px;
+            padding: 14px 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+        .status { background: #e0e0e6; border-radius: 60px; padding: 8px 16px; }
+        @media (max-width: 640px) { .gaze-btn { min-height: 70px; font-size: 1.1rem; } }
     </style>
 </head>
 <body>
-    <!-- STATUS-MELDUNG -->
-    <div class="status-message" id="statusMessage"></div>
+<div class="app">
 
-    <!-- HEADER -->
-    <div class="header">
-        <h1><i class="fas fa-eye"></i> Ultimative Kommunikationshilfe</h1>
-        <p>VOLLSTÄNDIG OPTIMIERT FÜR BLICKERFASSUNG - Alle Schaltflächen anwählbar</p>
-        <div class="device-indicator">
-            <span id="deviceDisplay"></span>
+    <!-- Hauptbereich: Text & Vorlesen + Autocomplete + KI-Phrasenvorschläge -->
+    <div class="card">
+        <div class="card-header" data-toggle="secMain">
+            <span>🧠 KI-Textassistent & Vorlesen</span>
+            <span class="toggle-icon">▼</span>
         </div>
-    </div>
-
-    <!-- HAUPTBEREICH -->
-    <div class="container">
-        <!-- SCHNELLAKTIONEN -->
-        <div class="collapsible-section">
-            <div class="section-header" data-section="quick">
-                <h2><i class="fas fa-bolt"></i> Schnellaktionen</h2>
-                <i class="fas fa-chevron-down"></i>
+        <div class="card-content" id="secMainContent">
+            <textarea id="mainText" class="big-textfield" placeholder="Schreibe oder tippe... KI schlägt Wörter vor und lernt mit dir."></textarea>
+            <div class="autocomplete-suggestions" id="autocompleteSuggestions"></div>
+            
+            <div class="voice-panel">
+                <span>🗣️ Stimme</span>
+                <select id="voiceSelect"></select>
+                <div class="status" id="voiceStatus">✅ gespeichert</div>
             </div>
-            <div class="section-content" id="quick-content">
-                <div class="quick-actions">
-                    <div class="quick-button" data-text="Hallo, wie geht es dir?" data-category="quick">
-                        <i class="fas fa-hand-wave fa-2x"></i>
-                        <span>HALLO</span>
-                    </div>
-                    <div class="quick-button" data-text="Ja, das stimmt." data-category="quick">
-                        <i class="fas fa-thumbs-up fa-2x"></i>
-                        <span>JA</span>
-                    </div>
-                    <div class="quick-button" data-text="Nein, das möchte ich nicht." data-category="quick">
-                        <i class="fas fa-thumbs-down fa-2x"></i>
-                        <span>NEIN</span>
-                    </div>
-                    <div class="quick-button" data-text="Danke für deine Hilfe." data-category="quick">
-                        <i class="fas fa-heart fa-2x"></i>
-                        <span>DANKE</span>
-                    </div>
-                    <div class="quick-button" data-text="Kannst du mir bitte helfen?" data-category="quick">
-                        <i class="fas fa-question-circle fa-2x"></i>
-                        <span>HILFE</span>
-                    </div>
-                    <div class="quick-button" data-text="Ich habe Schmerzen." data-category="quick">
-                        <i class="fas fa-plus-circle fa-2x"></i>
-                        <span>SCHMERZEN</span>
-                    </div>
-                    <div class="quick-button" data-text="Ich habe Hunger." data-category="quick">
-                        <i class="fas fa-utensils fa-2x"></i>
-                        <span>HUNGER</span>
-                    </div>
-                    <div class="quick-button" data-text="Ich habe Durst." data-category="quick">
-                        <i class="fas fa-glass-water fa-2x"></i>
-                        <span>DURST</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TEXTEINGABE -->
-        <div class="collapsible-section">
-            <div class="section-header" data-section="text">
-                <h2><i class="fas fa-edit"></i> Texteingabe & Vorlesen</h2>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="section-content" id="text-content">
-                <textarea class="text-input" id="mainText" placeholder="Tippe oder diktiere deinen Text hier...">Hallo! Ich kommuniziere mit dieser Hilfe.</textarea>
-                
-                <div class="toggle-container">
-                    <span class="toggle-label">WÖRTER</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="letterModeToggle">
-                        <span class="toggle-slider"></span>
-                    </label>
-                    <span class="toggle-label">BUCHSTABEN</span>
-                </div>
-                
-                <div class="text-controls">
-                    <button class="btn btn-primary" id="speakTextBtn">
-                        <i class="fas fa-volume-up fa-2x"></i> VORLESEN
-                    </button>
-                    <button class="btn btn-secondary" id="clearTextBtn">
-                        <i class="fas fa-eraser fa-2x"></i> LÖSCHEN
-                    </button>
-                    <button class="btn btn-success" id="saveTextBtn">
-                        <i class="fas fa-save fa-2x"></i> SPEICHERN
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- STIMMENAUSWAHL -->
-        <div class="collapsible-section">
-            <div class="section-header" data-section="voices">
-                <h2><i class="fas fa-user-voice"></i> Stimmenauswahl</h2>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="section-content" id="voices-content">
-                <div class="voice-selection">
-                    <button class="voice-btn active" data-voice="female1">
-                        <i class="fas fa-female fa-2x"></i> ANNA (weiblich)
-                    </button>
-                    <button class="voice-btn" data-voice="male1">
-                        <i class="fas fa-male fa-2x"></i> THOMAS (männlich)
-                    </button>
-                    <button class="voice-btn" data-voice="female2">
-                        <i class="fas fa-female fa-2x"></i> LENA (weiblich)
-                    </button>
-                    <button class="voice-btn" data-voice="male2">
-                        <i class="fas fa-male fa-2x"></i> KLAUS (männlich)
-                    </button>
-                </div>
-                <p class="info-text"><i class="fas fa-info-circle"></i> Die gewählte Stimme bleibt gespeichert.</p>
-            </div>
-        </div>
-
-        <!-- TELEFONAT-MODUS -->
-        <div class="collapsible-section">
-            <div class="section-header" data-section="call">
-                <h2><i class="fas fa-phone-alt"></i> Telefonat-Modus</h2>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="section-content" id="call-content">
-                <div class="call-mode">
-                    <h3><i class="fas fa-phone-volume"></i> Telefonat-Schnellhilfe</h3>
-                    <div class="call-buttons">
-                        <button class="btn btn-primary" data-text="Können Sie das bitte wiederholen?">
-                            <i class="fas fa-redo fa-2x"></i> WIEDERHOLEN
-                        </button>
-                        <button class="btn btn-primary" data-text="Können Sie bitte langsamer sprechen?">
-                            <i class="fas fa-tachometer-alt fa-2x"></i> LANGSAMER
-                        </button>
-                        <button class="btn btn-primary" data-text="Ich verstehe nicht, was Sie meinen.">
-                            <i class="fas fa-question fa-2x"></i> VERSTEHE NICHT
-                        </button>
-                        <button class="btn btn-primary" data-text="Können Sie das bitte aufschreiben?">
-                            <i class="fas fa-envelope fa-2x"></i> AUFSCHREIBEN
-                        </button>
-                    </div>
-                    <button class="btn btn-success" id="activateCallMode">
-                        <i class="fas fa-phone fa-2x"></i> TELEFONAT-MODUS AKTIVIEREN
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- SPRACHNACHRICHTEN -->
-        <div class="collapsible-section">
-            <div class="section-header" data-section="voice">
-                <h2><i class="fas fa-microphone-alt"></i> Sprachnachrichten</h2>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="section-content" id="voice-content">
-                <div class="voice-message-section">
-                    <h3><i class="fas fa-microphone"></i> Aufnahme & Versand</h3>
-                    
-                    <div class="recording-controls">
-                        <button class="recording-btn record-btn" id="recordBtn">
-                            <i class="fas fa-microphone fa-2x"></i>
-                        </button>
-                        <button class="recording-btn stop-btn hidden" id="stopBtn">
-                            <i class="fas fa-stop fa-2x"></i>
-                        </button>
-                        <button class="recording-btn send-btn hidden" id="sendBtn">
-                            <i class="fas fa-paper-plane fa-2x"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="recording-status">
-                        <p id="recordingStatus">Bereit zur Aufnahme</p>
-                        <p id="recordingTimer" class="hidden">00:00</p>
-                    </div>
-                    
-                    <button class="btn btn-secondary" id="shareAudioBtn">
-                        <i class="fas fa-share-alt fa-2x"></i> AUDIO TEILEN
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- NOTFALL -->
-        <div class="collapsible-section">
-            <div class="section-header" data-section="emergency">
-                <h2><i class="fas fa-first-aid"></i> Notfall</h2>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="section-content" id="emergency-content">
-                <div class="emergency-tool">
-                    <h3 class="emergency-header"><i class="fas fa-exclamation-triangle"></i> NOTFALL-KOMMUNIKATION</h3>
-                    
-                    <div class="emergency-buttons">
-                        <button class="emergency-btn" data-text="Hilfe! Ich brauche dringend Hilfe!">
-                            <i class="fas fa-life-ring fa-2x"></i> HILFE!
-                        </button>
-                        <button class="emergency-btn" data-text="Rufen Sie bitte einen Krankenwagen!">
-                            <i class="fas fa-ambulance fa-2x"></i> KRANKENWAGEN
-                        </button>
-                        <button class="emergency-btn" data-text="Ich habe starke Schmerzen!">
-                            <i class="fas fa-band-aid fa-2x"></i> SCHMERZEN
-                        </button>
-                        <button class="emergency-btn" data-text="Bitte rufen Sie meine Kontaktperson an!">
-                            <i class="fas fa-phone fa-2x"></i> KONTAKT ANRUFEN
-                        </button>
-                    </div>
-                    
-                    <button class="btn btn-danger" id="emergencyRepeatBtn">
-                        <i class="fas fa-bullhorn fa-2x"></i> NOTFALL WIEDERHOLEN
-                    </button>
-                </div>
+            <div class="button-row">
+                <button id="readBtn" class="gaze-btn">🔊 Vorlesen</button>
+                <button id="stopBtn" class="gaze-btn" style="background:#5e5e66;">⏹️ Stopp</button>
             </div>
         </div>
     </div>
 
-    <!-- FOOTER -->
-    <div class="footer">
-        <p>🔵 ALLE SCHALTFLÄCHEN FÜR BLICKERFASSUNG OPTIMIERT 🔵</p>
-        <p>👁️ Fokusanzeige: Blauer Rand | ⏱️ Verweildauer: Fortschrittsbalken</p>
+    <!-- Kontextbewusste KI-Phrasenvorschläge (dynamisch + lernend) -->
+    <div class="card">
+        <div class="card-header" data-toggle="secPhrases">
+            <span>✨ KI-Phrasenvorschläge (lernend & kontextbewusst)</span>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-content" id="secPhrasesContent">
+            <div class="context-bar">
+                <span>📌 Aktueller Kontext:</span>
+                <span id="currentContextBadge" class="context-badge">Alltag</span>
+                <select id="contextSelect">
+                    <option value="alltag">🏠 Alltag</option>
+                    <option value="telefon">📞 Telefonat</option>
+                    <option value="arzt">🩺 Arzt / Notfall</option>
+                    <option value="arbeit">💼 Arbeit / Termin</option>
+                </select>
+                <button id="resetProfileBtn" class="gaze-btn" style="background:#a55; padding:8px 20px; min-height:50px;">🔄 Profil zurücksetzen</button>
+            </div>
+            <div id="kiPhraseContainer" class="phrase-grid">
+                <!-- Dynamische KI-Phrasen werden hier geladen -->
+            </div>
+            <small>💡 Diese Vorschläge lernen von dir: Je öfter du eine Phrase verwendest, desto öfter taucht sie auf. Der Kontext beeinflusst die Auswahl.</small>
+        </div>
     </div>
 
-    <!-- SHORTCUT-INFO (optional) -->
-    <div class="shortcut-info">
-        <i class="fas fa-eye"></i> Blickerfassung aktiv<br>
-        <small>Fokus: blauer Rand | Aktion: 1 Sek. fixieren</small>
+    <!-- Telefonat-Schnellsprech & Sprachnachrichten + Notfall (wie bisher) -->
+    <div class="card">
+        <div class="card-header" data-toggle="secPhone">
+            <span>📞 Telefon-Soforthilfe & Sprachnachricht</span>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-content" id="secPhoneContent">
+            <div class="phrase-grid" id="quickPhoneGrid">
+                <!-- Dynamische Buttons werden gleich eingefügt, bleiben aber fix -->
+            </div>
+            <div class="button-row">
+                <button id="customPhoneBtn" class="gaze-btn" style="background:#e67e22;">➕ Eigene Phrase (aus Textfeld)</button>
+                <button id="createAudioShare" class="gaze-btn" style="background:#007a5e;">🎤 Text → Sprachnachricht</button>
+                <button id="shareAudioBtn" class="gaze-btn" style="background:#5856d6;">📤 Teilen</button>
+            </div>
+            <div id="audioShareStatus" style="background:#f2f2f5; border-radius:48px; padding:12px; margin-top:8px;">⚡ Keine Nachricht</div>
+        </div>
     </div>
 
-    <script>
-        (function() {
-            // ===========================================
-            // VOLLSTÄNDIGE BLICKERFASSUNG FÜR ALLES
-            // ===========================================
-            
-            // 1. ALLE INTERAKTIVEN ELEMENTE SAMMELN
-            function getAllClickableElements() {
-                return document.querySelectorAll(
-                    'button, ' +
-                    '.quick-button, ' +
-                    '.voice-btn, ' +
-                    '.section-header, ' +
-                    '.text-input, ' +
-                    '.toggle-switch, ' +
-                    '.recording-btn, ' +
-                    '.emergency-btn, ' +
-                    '.download-link, ' +
-                    '.btn, ' +
-                    '.call-buttons button, ' +
-                    'a, ' +
-                    '[data-text], ' +
-                    '.clickable, ' +
-                    '.gaze-target'
-                );
-            }
+    <!-- Notfall + Extra -->
+    <div class="card emergency-card" style="border-left: 8px solid #ff5e00;">
+        <div class="card-header" data-toggle="secEmergency">
+            <span>🆘 NOTFALL & unkomplizierte Hilfe</span>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-content" id="secEmergencyContent">
+            <div class="phrase-grid">
+                <button class="gaze-btn emergencyBtn" data-emg="Ich brauche sofort Hilfe! Notruf.">🚨 Notruf</button>
+                <button class="gaze-btn emergencyBtn" data-emg="Medizinischer Notfall, bitte kommen Sie schnell.">🩺 Medizin</button>
+                <button class="gaze-btn emergencyBtn" data-emg="Kann mir jemand helfen? Ich kann nicht sprechen.">🗣️ Kommunikation</button>
+            </div>
+            <button id="customEmergencyBtn" class="gaze-btn" style="background:#d00000;">🔴 Eigene Notfall-Ansage</button>
+        </div>
+    </div>
+</div>
 
-            // 2. VARIABLEN FÜR BLICKERFASSUNG
-            let gazeElements = [];
-            let currentFocusIndex = -1;
-            let gazeTimer = null;
-            let gazeProgressInterval = null;
-            let isGazeMode = true;
-            let gazeDwellTime = 1000; // 1 Sekunde Verweildauer
-            let currentProgress = 0;
-            let currentFocusedElement = null;
-            let lastGazePosition = { x: 0, y: 0 };
-            let isGazeActive = false;
-
-            // 3. GERÄTEEKENNUNG
-            function detectDevice() {
-                const width = window.innerWidth;
-                const deviceDisplay = document.getElementById('deviceDisplay');
-                
-                if (width <= 390) {
-                    deviceDisplay.innerHTML = '<i class="fas fa-mobile-alt"></i> iPhone 16 (optimiert)';
-                } else if (width <= 768) {
-                    deviceDisplay.innerHTML = '<i class="fas fa-mobile-alt"></i> Smartphone (Blickerfassungsmodus)';
-                } else if (width <= 1024) {
-                    deviceDisplay.innerHTML = '<i class="fas fa-tablet-alt"></i> Tablet (Blickerfassungsmodus)';
-                } else {
-                    deviceDisplay.innerHTML = '<i class="fas fa-desktop"></i> Desktop (Blickerfassung simuliert)';
-                }
-            }
-
-            // 4. FOKUS AUF ELEMENT SETZEN (BLICKERFASSUNG)
-            function setGazeFocus(element, isEmergency = false, isSuccess = false) {
-                // Alten Fokus entfernen
-                removeAllGazeFocus();
-                
-                if (!element) return;
-                
-                currentFocusedElement = element;
-                
-                // Fokus-Klasse basierend auf Typ
-                if (isEmergency || element.classList.contains('emergency-btn')) {
-                    element.classList.add('gaze-focused-emergency');
-                } else if (isSuccess || element.classList.contains('btn-success')) {
-                    element.classList.add('gaze-focused-success');
-                } else {
-                    element.classList.add('gaze-focused');
-                }
-                
-                // Optional: Fokus-Indikator hinzufügen
-                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                
-                // Progress-Bar für Verweildauer starten
-                startGazeProgress(element);
-                
-                // Status anzeigen
-                showStatus('Element fokussiert: ' + (element.textContent || element.tagName).substring(0, 30));
-            }
-
-            // 5. FOKUS ENTFERNEN
-            function removeAllGazeFocus() {
-                document.querySelectorAll('.gaze-focused, .gaze-focused-emergency, .gaze-focused-success').forEach(el => {
-                    el.classList.remove('gaze-focused', 'gaze-focused-emergency', 'gaze-focused-success');
-                    
-                    // Eventuelle Progress-Bars entfernen
-                    const progressBar = el.querySelector('.gaze-progress');
-                    if (progressBar) progressBar.remove();
-                });
-                
-                stopGazeProgress();
-                currentFocusedElement = null;
-            }
-
-            // 6. PROGRESS-BAR FÜR VERWEILDAUER
-            function startGazeProgress(element) {
-                stopGazeProgress();
-                
-                // Existierende Progress-Bar entfernen
-                const oldBar = element.querySelector('.gaze-progress');
-                if (oldBar) oldBar.remove();
-                
-                // Neue Progress-Bar erstellen
-                const progressBar = document.createElement('div');
-                progressBar.className = 'gaze-progress';
-                element.appendChild(progressBar);
-                
-                currentProgress = 0;
-                const startTime = Date.now();
-                
-                // Progress aktualisieren
-                gazeProgressInterval = setInterval(() => {
-                    const elapsed = Date.now() - startTime;
-                    currentProgress = Math.min(100, (elapsed / gazeDwellTime) * 100);
-                    progressBar.style.width = currentProgress + '%';
-                    
-                    // Bei 100% Aktion ausführen
-                    if (currentProgress >= 100) {
-                        clearInterval(gazeProgressInterval);
-                        gazeProgressInterval = null;
-                        
-                        // Element aktivieren (klicken)
-                        activateGazeElement(element);
-                    }
-                }, 50);
-                
-                // Timer für Abbruch
-                gazeTimer = setTimeout(() => {
-                    // Falls noch nicht ausgelöst
-                }, gazeDwellTime + 100);
-            }
-
-            function stopGazeProgress() {
-                if (gazeProgressInterval) {
-                    clearInterval(gazeProgressInterval);
-                    gazeProgressInterval = null;
-                }
-                if (gazeTimer) {
-                    clearTimeout(gazeTimer);
-                    gazeTimer = null;
-                }
-            }
-
-            // 7. ELEMENT AKTIVIEREN (DURCH BLICK)
-            function activateGazeElement(element) {
-                if (!element) return;
-                
-                // Visuelles Feedback
-                element.style.transform = 'scale(0.98)';
-                setTimeout(() => {
-                    element.style.transform = '';
-                }, 200);
-                
-                // Status anzeigen
-                showStatus('Aktiviert: ' + (element.textContent || element.tagName).substring(0, 30));
-                
-                // Klick-Event auslösen
-                if (element.click) {
-                    element.click();
-                } else {
-                    // Fallback: Event simulieren
-                    const event = new MouseEvent('click', {
-                        view: window,
-                        bubbles: true,
-                        cancelable: true
-                    });
-                    element.dispatchEvent(event);
-                }
-                
-                // Progress stoppen
-                stopGazeProgress();
-                
-                // Fokus kurz halten für Feedback
-                setTimeout(() => {
-                    removeAllGazeFocus();
-                }, 300);
-            }
-
-            // 8. BLICKPOSITION VERARBEITEN (SIMULATION)
-            function handleGazePosition(x, y) {
-                if (!isGazeMode) return;
-                
-                // Element unter der Blickposition finden
-                const element = document.elementFromPoint(x, y);
-                if (!element) return;
-                
-                // Nächstes klickbares Element finden
-                const clickable = findClickableParent(element);
-                
-                if (clickable) {
-                    // Wenn neues Element, Fokus wechseln
-                    if (clickable !== currentFocusedElement) {
-                        setGazeFocus(clickable);
-                    }
-                } else {
-                    // Kein klickbares Element -> Fokus entfernen
-                    removeAllGazeFocus();
-                }
-            }
-
-            // 9. KLICKBAREN ELTERNKNOTEN FINDEN
-            function findClickableParent(element) {
-                // Prüfen ob Element selbst klickbar
-                if (isElementClickable(element)) {
-                    return element;
-                }
-                
-                // Eltern durchgehen
-                let parent = element.parentElement;
-                while (parent) {
-                    if (isElementClickable(parent)) {
-                        return parent;
-                    }
-                    parent = parent.parentElement;
-                }
-                
-                return null;
-            }
-
-            // 10. PRÜFEN OB ELEMENT KLICKBAR IST
-            function isElementClickable(element) {
-                const clickableSelectors = [
-                    'button',
-                    '.quick-button',
-                    '.voice-btn',
-                    '.section-header',
-                    '.text-input',
-                    '.toggle-switch',
-                    '.recording-btn',
-                    '.emergency-btn',
-                    '.btn',
-                    '.call-buttons button',
-                    'a',
-                    '[data-text]',
-                    '[role="button"]',
-                    '.clickable'
-                ];
-                
-                return clickableSelectors.some(selector => {
-                    try {
-                        return element.matches && element.matches(selector);
-                    } catch (e) {
-                        return false;
-                    }
-                });
-            }
-
-            // 11. STATUS ANZEIGEN
-            function showStatus(message, isError = false) {
-                const statusEl = document.getElementById('statusMessage');
-                statusEl.textContent = message;
-                statusEl.classList.add('show');
-                
-                if (isError) {
-                    statusEl.style.backgroundColor = 'var(--danger-color)';
-                } else {
-                    statusEl.style.backgroundColor = 'var(--primary-color)';
-                }
-                
-                setTimeout(() => {
-                    statusEl.classList.remove('show');
-                }, 2000);
-            }
-
-            // 12. BLICKERFASSUNG STARTEN (SIMULATION)
-            function startGazeTracking() {
-                // Maus als Blick-Simulation (für Entwicklung)
-                document.addEventListener('mousemove', (e) => {
-                    handleGazePosition(e.clientX, e.clientY);
-                });
-                
-                // Touch für mobile
-                document.addEventListener('touchmove', (e) => {
-                    e.preventDefault();
-                    if (e.touches.length > 0) {
-                        const touch = e.touches[0];
-                        handleGazePosition(touch.clientX, touch.clientY);
-                    }
-                });
-                
-                // Tastatur-Navigation als Fallback
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-                        navigateWithKeyboard(e.key);
-                    } else if (e.key === 'Enter' || e.key === ' ') {
-                        if (currentFocusedElement) {
-                            activateGazeElement(currentFocusedElement);
-                        }
-                    }
-                });
-                
-                showStatus('👁️ Blickerfassung aktiv - Fokussiere Elemente mit Blick');
-            }
-
-            // 13. TASTATUR-NAVIGATION (FALLBACK)
-            function navigateWithKeyboard(key) {
-                const elements = Array.from(getAllClickableElements());
-                if (elements.length === 0) return;
-                
-                if (currentFocusIndex === -1) {
-                    currentFocusIndex = 0;
-                } else {
-                    switch(key) {
-                        case 'ArrowRight':
-                        case 'ArrowDown':
-                            currentFocusIndex = (currentFocusIndex + 1) % elements.length;
-                            break;
-                        case 'ArrowLeft':
-                        case 'ArrowUp':
-                            currentFocusIndex = (currentFocusIndex - 1 + elements.length) % elements.length;
-                            break;
-                    }
-                }
-                
-                setGazeFocus(elements[currentFocusIndex]);
-            }
-
-            // ===========================================
-            // ALLE WEITEREN FUNKTIONEN (Sprache, Aufnahme, etc.)
-            // ===========================================
-            
-            // Sprachsynthese
-            let currentVoice = 'female1';
-            let speechSynth = window.speechSynthesis;
-            
-            // Stimmenauswahl
-            document.querySelectorAll('.voice-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.voice-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    currentVoice = this.dataset.voice;
-                    localStorage.setItem('selectedVoice', currentVoice);
-                    showStatus('Stimme gewählt: ' + this.textContent.trim());
-                });
-            });
-            
-            // Gespeicherte Stimme laden
-            const savedVoice = localStorage.getItem('selectedVoice');
-            if (savedVoice) {
-                currentVoice = savedVoice;
-                document.querySelectorAll('.voice-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                    if (btn.dataset.voice === savedVoice) {
-                        btn.classList.add('active');
-                    }
-                });
-            }
-            
-            // Text vorlesen
-            document.getElementById('speakTextBtn').addEventListener('click', function() {
-                const text = document.getElementById('mainText').value;
-                const letterMode = document.getElementById('letterModeToggle').checked;
-                
-                if (!text.trim()) {
-                    showStatus('Bitte Text eingeben!', true);
-                    return;
-                }
-                
-                if (letterMode) {
-                    // Buchstabenweise
-                    let i = 0;
-                    function speakNextLetter() {
-                        if (i < text.length) {
-                            const char = text[i];
-                            if (char !== ' ') {
-                                const utterance = new SpeechSynthesisUtterance(char);
-                                utterance.lang = 'de-DE';
-                                utterance.onend = () => {
-                                    i++;
-                                    speakNextLetter();
-                                };
-                                speechSynth.speak(utterance);
-                            } else {
-                                i++;
-                                speakNextLetter();
-                            }
-                        }
-                    }
-                    speakNextLetter();
-                } else {
-                    // Wortweise
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.lang = 'de-DE';
-                    utterance.rate = 1.0;
-                    speechSynth.speak(utterance);
-                }
-                
-                showStatus('🔊 Vorlesen gestartet');
-            });
-            
-            // Text löschen
-            document.getElementById('clearTextBtn').addEventListener('click', function() {
-                document.getElementById('mainText').value = '';
-                showStatus('Text gelöscht');
-            });
-            
-            // Text speichern
-            document.getElementById('saveTextBtn').addEventListener('click', function() {
-                const text = document.getElementById('mainText').value;
-                if (text.trim()) {
-                    localStorage.setItem('savedText', text);
-                    showStatus('Text gespeichert!');
-                } else {
-                    showStatus('Kein Text zum Speichern', true);
-                }
-            });
-            
-            // Gespeicherten Text laden
-            const savedText = localStorage.getItem('savedText');
-            if (savedText) {
-                document.getElementById('mainText').value = savedText;
-            }
-            
-            // Schnellaktionen
-            document.querySelectorAll('[data-text]').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    const text = this.dataset.text;
-                    const letterMode = document.getElementById('letterModeToggle').checked;
-                    
-                    if (letterMode) {
-                        // Buchstabenweise
-                        let i = 0;
-                        function speakNextLetter() {
-                            if (i < text.length) {
-                                const char = text[i];
-                                if (char !== ' ') {
-                                    const utterance = new SpeechSynthesisUtterance(char);
-                                    utterance.lang = 'de-DE';
-                                    utterance.onend = () => {
-                                        i++;
-                                        speakNextLetter();
-                                    };
-                                    speechSynth.speak(utterance);
-                                } else {
-                                    i++;
-                                    speakNextLetter();
-                                }
-                            }
-                        }
-                        speakNextLetter();
-                    } else {
-                        const utterance = new SpeechSynthesisUtterance(text);
-                        utterance.lang = 'de-DE';
-                        speechSynth.speak(utterance);
-                    }
-                    
-                    showStatus('🔊: ' + text.substring(0, 30) + '...');
-                });
-            });
-            
-            // Sprachnachrichten
-            let mediaRecorder;
-            let audioChunks = [];
-            let isRecording = false;
-            let seconds = 0;
-            let timerInterval;
-            
-            document.getElementById('recordBtn').addEventListener('click', async function() {
+<script>
+    (function() {
+        // ---------- LERNENDES PERSONALISIERUNGS-PROFIL (localStorage) ----------
+        let usageProfile = {
+            phraseStats: {},  // { "phrase": count }
+            contextHistory: []
+        };
+        const STORAGE_KEY = "kiCommProfile";
+        function loadProfile() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if(saved) {
                 try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    mediaRecorder = new MediaRecorder(stream);
-                    
-                    mediaRecorder.start();
-                    isRecording = true;
-                    
-                    // UI
-                    this.classList.add('hidden');
-                    document.getElementById('stopBtn').classList.remove('hidden');
-                    document.getElementById('recordingStatus').textContent = '🔴 Aufnahme läuft...';
-                    document.getElementById('recordingStatus').classList.add('recording');
-                    document.getElementById('recordingTimer').classList.remove('hidden');
-                    
-                    // Timer
-                    seconds = 0;
-                    timerInterval = setInterval(() => {
-                        seconds++;
-                        const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
-                        const secs = (seconds % 60).toString().padStart(2, '0');
-                        document.getElementById('recordingTimer').textContent = `${mins}:${secs}`;
-                    }, 1000);
-                    
-                    audioChunks = [];
-                    
-                    mediaRecorder.addEventListener('dataavailable', event => {
-                        audioChunks.push(event.data);
-                    });
-                    
-                    mediaRecorder.addEventListener('stop', () => {
-                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                        const audioUrl = URL.createObjectURL(audioBlob);
-                        
-                        document.getElementById('sendBtn').dataset.audioUrl = audioUrl;
-                        document.getElementById('sendBtn').classList.remove('hidden');
-                        
-                        document.getElementById('recordingStatus').textContent = '✅ Aufnahme fertig';
-                        document.getElementById('recordingStatus').classList.remove('recording');
-                        
-                        showStatus('Aufnahme fertig!');
-                    });
-                    
-                } catch (error) {
-                    showStatus('❌ Mikrofon-Zugriff fehlgeschlagen', true);
-                }
-            });
-            
-            document.getElementById('stopBtn').addEventListener('click', function() {
-                if (mediaRecorder && isRecording) {
-                    mediaRecorder.stop();
-                    isRecording = false;
-                    
-                    clearInterval(timerInterval);
-                    
-                    this.classList.add('hidden');
-                    document.getElementById('recordBtn').classList.remove('hidden');
-                    
-                    showStatus('Aufnahme gestoppt');
-                }
-            });
-            
-            document.getElementById('sendBtn').addEventListener('click', function() {
-                const audioUrl = this.dataset.audioUrl;
-                if (!audioUrl) {
-                    showStatus('Keine Aufnahme vorhanden', true);
-                    return;
-                }
-                
-                const a = document.createElement('a');
-                a.href = audioUrl;
-                a.download = 'sprachnachricht.wav';
-                a.textContent = 'Download';
-                a.className = 'btn btn-primary download-link';
-                a.style.marginTop = '10px';
-                
-                const oldLink = document.querySelector('.download-link');
-                if (oldLink) oldLink.remove();
-                
-                this.parentElement.appendChild(a);
-                showStatus('Audio zum Teilen bereit');
-            });
-            
-            document.getElementById('shareAudioBtn').addEventListener('click', function() {
-                if (navigator.share) {
-                    navigator.share({
-                        title: 'Sprachnachricht',
-                        text: 'Hier ist meine Sprachnachricht',
-                    }).catch(() => {
-                        showStatus('Teilen abgebrochen');
-                    });
-                } else {
-                    showStatus('Teilen nicht unterstützt', true);
-                }
-            });
-            
-            // Telefonat-Modus
-            document.getElementById('activateCallMode').addEventListener('click', function() {
-                this.textContent = '📞 TELEFONAT-MODUS AKTIV';
-                this.style.backgroundColor = 'var(--danger-color)';
-                showStatus('Telefonat-Modus aktiviert!');
-                
-                setTimeout(() => {
-                    this.textContent = '📞 TELEFONAT-MODUS AKTIVIEREN';
-                    this.style.backgroundColor = '';
-                }, 30000);
-            });
-            
-            // Notfall wiederholen
-            document.getElementById('emergencyRepeatBtn').addEventListener('click', function() {
-                const utterance = new SpeechSynthesisUtterance('Hilfe! Ich brauche dringend Hilfe!');
-                utterance.lang = 'de-DE';
-                utterance.rate = 1.2;
-                speechSynth.speak(utterance);
-                
-                this.textContent = '🚨 NOTFALL WIEDERHOLT!';
-                setTimeout(() => {
-                    this.textContent = '🚨 NOTFALL WIEDERHOLEN';
-                }, 2000);
-                
-                showStatus('🚨 NOTFALL-AUSGABE!');
-            });
-            
-            // Klappbare Bereiche
-            document.querySelectorAll('.section-header').forEach(header => {
-                header.addEventListener('click', function() {
-                    const section = this.parentElement;
-                    section.classList.toggle('collapsed');
-                    const icon = this.querySelector('.fa-chevron-down, .fa-chevron-right');
-                    
-                    if (section.classList.contains('collapsed')) {
-                        icon.classList.replace('fa-chevron-down', 'fa-chevron-right');
+                    usageProfile = JSON.parse(saved);
+                } catch(e) {}
+            }
+            if(!usageProfile.phraseStats) usageProfile.phraseStats = {};
+            if(!usageProfile.contextHistory) usageProfile.contextHistory = [];
+        }
+        function saveProfile() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(usageProfile));
+        }
+        // Eine Phrase verwenden (lernen)
+        function recordPhraseUsage(phrase, context) {
+            if(!phrase || phrase.trim().length === 0) return;
+            const key = phrase.trim().toLowerCase();
+            usageProfile.phraseStats[key] = (usageProfile.phraseStats[key] || 0) + 1;
+            usageProfile.contextHistory.unshift({ phrase: phrase, context: context, timestamp: Date.now() });
+            if(usageProfile.contextHistory.length > 100) usageProfile.contextHistory.pop();
+            saveProfile();
+            // Aktualisiere die KI-Vorschläge (wenn aktueller Kontext)
+            updateKIPhraseSuggestions();
+        }
+        
+        // ----- KI-Vorschläge: Basierend auf Kontext + häufig genutzte Phrasen (Top 6)
+        function getTopPhrasesByContext(context, limit = 6) {
+            // Basis-Phrasen für Kontexte + persönliche meistgenutzte
+            const contextPhrases = {
+                alltag: ["Wie geht es dir?", "Ich bin müde.", "Lass uns etwas essen.", "Danke für deine Hilfe.", "Ich brauche eine Pause.", "Schönen Tag noch!"],
+                telefon: ["Kann ich Sie später zurückrufen?", "Einen Moment bitte.", "Könnten Sie das wiederholen?", "Ja, verstanden.", "Nein, danke.", "Auf Wiederhören."],
+                arzt: ["Ich habe Schmerzen hier.", "Brauche ein Rezept.", "Bitte rufen Sie den Notarzt.", "Mir ist schwindelig.", "Welche Medikamente?", "Wann ist der nächste Termin?"],
+                arbeit: ["Das ist erledigt.", "Brauche mehr Zeit.", "Termin verschieben?", "Danke für das Meeting.", "Frage per E-Mail beantworten.", "Bis morgen!"]
+            };
+            let baseList = contextPhrases[context] || contextPhrases.alltag;
+            // Persönliche Top-Phrasen aus Stats (die im aktuellen Kontext benutzt wurden – wir nehmen die generell beliebtesten)
+            let personalPhrases = Object.entries(usageProfile.phraseStats)
+                .sort((a,b) => b[1] - a[1])
+                .slice(0, 4)
+                .map(entry => entry[0]);
+            // Kombinieren: zuerst personal, dann base, einzigartig
+            let combined = [...personalPhrases];
+            for(let p of baseList) {
+                if(!combined.includes(p.toLowerCase())) combined.push(p);
+            }
+            return combined.slice(0, limit);
+        }
+        
+        let currentContext = "alltag";
+        function updateKIPhraseSuggestions() {
+            const container = document.getElementById("kiPhraseContainer");
+            if(!container) return;
+            const phrases = getTopPhrasesByContext(currentContext, 6);
+            container.innerHTML = "";
+            phrases.forEach(phrase => {
+                const btn = document.createElement("button");
+                btn.className = "gaze-btn phrase-btn";
+                btn.innerText = phrase;
+                btn.style.background = "#2c6e9e";
+                btn.addEventListener("click", () => {
+                    // Text in das Hauptfeld einfügen (oder anhängen)
+                    const textarea = document.getElementById("mainText");
+                    const currentText = textarea.value;
+                    if(currentText.trim().length > 0 && !currentText.endsWith(" ") && !currentText.endsWith("\n")) {
+                        textarea.value = currentText + " " + phrase;
                     } else {
-                        icon.classList.replace('fa-chevron-right', 'fa-chevron-down');
+                        textarea.value = currentText + phrase;
                     }
+                    textarea.focus();
+                    recordPhraseUsage(phrase, currentContext);
+                    // Optional: direkt vorlesen? nicht nötig, aber Nutzer kann selbst vorlesen.
+                    generateAutocompleteSuggestions(); // Aktualisiere Wortvorschläge
                 });
+                container.appendChild(btn);
             });
-            
-            // ALLES STARTEN
-            window.addEventListener('load', function() {
-                detectDevice();
-                window.addEventListener('resize', detectDevice);
-                
-                // Blickerfassung starten
-                startGazeTracking();
-                
-                // Alle Elemente für Blickerfassung markieren
-                getAllClickableElements().forEach(el => {
-                    el.setAttribute('data-gaze', 'true');
+        }
+        
+        // ---------- Vorausschauende Texteingabe (Autocomplete) basierend auf personalisiertem Wörterbuch + Standardwörtern ----------
+        let commonWords = ["ich", "du", "er", "sie", "wir", "ihr", "sie", "haben", "sein", "werden", "können", "möchten", "bitte", "danke", "ja", "nein", "vielleicht", "heute", "morgen", "gestern", "Termin", "Arzt", "Hilfe", "Telefon", "Nachricht"];
+        function getPersonalWords() {
+            // Wörter aus den genutzten Phrasen extrahieren
+            let wordsSet = new Set(commonWords);
+            for(let phrase in usageProfile.phraseStats) {
+                let parts = phrase.split(/\s+/);
+                parts.forEach(w => { if(w.length > 2) wordsSet.add(w.toLowerCase()); });
+            }
+            return Array.from(wordsSet);
+        }
+        
+        function generateAutocompleteSuggestions() {
+            const textarea = document.getElementById("mainText");
+            const container = document.getElementById("autocompleteSuggestions");
+            let value = textarea.value;
+            let lastWordMatch = value.match(/(\S+)$/);
+            if(!lastWordMatch) { container.innerHTML = ""; return; }
+            let lastWord = lastWordMatch[1].toLowerCase();
+            if(lastWord.length < 2) { container.innerHTML = ""; return; }
+            const wordBank = getPersonalWords();
+            let matches = wordBank.filter(w => w.startsWith(lastWord)).slice(0, 5);
+            if(matches.length === 0) { container.innerHTML = ""; return; }
+            container.innerHTML = "";
+            matches.forEach(match => {
+                let chip = document.createElement("div");
+                chip.className = "suggestion-chip";
+                chip.innerText = match;
+                chip.addEventListener("click", () => {
+                    let current = textarea.value;
+                    let newVal = current.replace(/(\S+)$/, match);
+                    textarea.value = newVal;
+                    textarea.focus();
+                    generateAutocompleteSuggestions();
                 });
-                
-                showStatus('👁️ Blickerfassung bereit - ' + getAllClickableElements().length + ' Elemente verfügbar');
+                container.appendChild(chip);
             });
-        })();
-    </script>
+        }
+        
+        // ---------- Globale Sprach- und UI-Funktionen (Vorlesen, Stimme etc.) ----------
+        let currentUtterance = null;
+        let selectedVoice = null;
+        let lastShareBlob = null;
+        
+        const textarea = document.getElementById("mainText");
+        const voiceSelect = document.getElementById("voiceSelect");
+        const readBtn = document.getElementById("readBtn");
+        const stopBtn = document.getElementById("stopBtn");
+        const voiceStatusSpan = document.getElementById("voiceStatus");
+        
+        function populateVoices() {
+            const voices = speechSynthesis.getVoices();
+            if(!voices.length) return;
+            voiceSelect.innerHTML = '';
+            let preferred = 0;
+            voices.forEach((v, idx) => {
+                const opt = document.createElement('option');
+                opt.value = idx;
+                opt.textContent = `${v.name} (${v.lang})`;
+                if(v.lang.includes('de')) preferred = idx;
+                voiceSelect.appendChild(opt);
+            });
+            voiceSelect.selectedIndex = preferred;
+            updateSelectedVoice();
+        }
+        function updateSelectedVoice() {
+            const voices = speechSynthesis.getVoices();
+            const idx = parseInt(voiceSelect.value);
+            if(voices[idx]) selectedVoice = voices[idx];
+            voiceStatusSpan.innerText = selectedVoice ? `🎤 ${selectedVoice.name}` : "Standard";
+        }
+        function speakText(text) {
+            if(!text.trim()) text = "Bitte Text eingeben.";
+            stopSpeaking();
+            const utterance = new SpeechSynthesisUtterance(text);
+            if(selectedVoice) utterance.voice = selectedVoice;
+            utterance.lang = selectedVoice?.lang || 'de-DE';
+            utterance.rate = 0.95;
+            currentUtterance = utterance;
+            utterance.onend = () => { currentUtterance = null; };
+            speechSynthesis.speak(utterance);
+        }
+        function stopSpeaking() { if(speechSynthesis.speaking || speechSynthesis.pending) speechSynthesis.cancel(); currentUtterance = null; }
+        function playPhrase(phrase) { stopSpeaking(); const utter = new SpeechSynthesisUtterance(phrase); if(selectedVoice) utter.voice = selectedVoice; speechSynthesis.speak(utter); recordPhraseUsage(phrase, currentContext); }
+        
+        readBtn.addEventListener('click', () => speakText(textarea.value));
+        stopBtn.addEventListener('click', stopSpeaking);
+        voiceSelect.addEventListener('change', updateSelectedVoice);
+        if(speechSynthesis.onvoiceschanged) speechSynthesis.onvoiceschanged = populateVoices;
+        populateVoices();
+        textarea.addEventListener('input', generateAutocompleteSuggestions);
+        
+        // ---------- Kontextauswahl ----------
+        const contextSelect = document.getElementById("contextSelect");
+        const contextBadge = document.getElementById("currentContextBadge");
+        contextSelect.addEventListener("change", (e) => {
+            currentContext = e.target.value;
+            contextBadge.innerText = contextSelect.options[contextSelect.selectedIndex].text;
+            updateKIPhraseSuggestions();
+        });
+        document.getElementById("resetProfileBtn").addEventListener("click", () => {
+            usageProfile = { phraseStats: {}, contextHistory: [] };
+            saveProfile();
+            updateKIPhraseSuggestions();
+            generateAutocompleteSuggestions();
+            alert("Persönliches Sprachprofil wurde zurückgesetzt.");
+        });
+        
+        // ----- Telefon-Buttons (fix + zusätzlich dynamisch) -----
+        const quickPhoneGrid = document.getElementById("quickPhoneGrid");
+        const quickPhones = [
+            "📞 Rückruf: Kann ich Sie später zurückrufen?",
+            "⏳ Moment: Einen Moment bitte.",
+            "🔄 Wiederholung: Könnten Sie das wiederholen?",
+            "❌ Nicht korrekt: Das stimmt nicht.",
+            "🫂 Geduld: Ich nutze unterstützte Kommunikation.",
+            "👍 Auf Wiederhören: Danke, tschüss!"
+        ];
+        quickPhoneGrid.innerHTML = "";
+        quickPhones.forEach(item => {
+            let [emojiText, phrase] = item.split(": ");
+            const btn = document.createElement("button");
+            btn.className = "gaze-btn";
+            btn.innerText = emojiText;
+            btn.style.background = "#3c6e71";
+            btn.addEventListener("click", () => playPhrase(phrase));
+            quickPhoneGrid.appendChild(btn);
+        });
+        document.getElementById("customPhoneBtn").addEventListener("click", () => {
+            let custom = textarea.value.trim();
+            if(!custom) custom = "Bitte Text eingeben.";
+            playPhrase(custom);
+        });
+        
+        // Sprachnachricht
+        function prepareVoiceMessage() {
+            const msg = textarea.value.trim();
+            if(!msg) { alert("Bitte Text eingeben"); return null; }
+            const content = `🔊 KI-Sprachnachricht:\n"${msg}"\n\n💡 Vorgelesen mit Kommunikationshilfe.`;
+            const blob = new Blob([content], {type: 'text/plain'});
+            lastShareBlob = blob;
+            document.getElementById("audioShareStatus").innerHTML = `✅ Nachricht erstellt: "${msg.substring(0,60)}"<br>Jetzt teilen.`;
+            return blob;
+        }
+        document.getElementById("createAudioShare").addEventListener("click", prepareVoiceMessage);
+        document.getElementById("shareAudioBtn").addEventListener("click", async () => {
+            if(!lastShareBlob) prepareVoiceMessage();
+            if(!lastShareBlob) return;
+            const file = new File([lastShareBlob], "Sprachnachricht.txt", {type: "text/plain"});
+            if(navigator.share) {
+                try { await navigator.share({ title: "Meine Sprachnachricht", files: [file] }); } catch(e) {}
+            } else {
+                const url = URL.createObjectURL(lastShareBlob);
+                const a = document.createElement('a'); a.href = url; a.download = "Sprachnachricht.txt"; a.click();
+                URL.revokeObjectURL(url);
+            }
+        });
+        
+        // Notfall
+        document.querySelectorAll(".emergencyBtn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const msg = btn.getAttribute("data-emg");
+                if(msg) playPhrase(msg);
+            });
+        });
+        document.getElementById("customEmergencyBtn").addEventListener("click", () => {
+            let txt = textarea.value.trim();
+            if(!txt) txt = "Ich benötige sofort Hilfe!";
+            playPhrase(txt);
+        });
+        
+        // Auf-/Zuklappen
+        document.querySelectorAll('.card-header').forEach(header => {
+            const targetId = header.getAttribute('data-toggle');
+            let contentDiv = document.getElementById(targetId + "Content");
+            if(contentDiv) {
+                contentDiv.style.display = 'block';
+                header.addEventListener('click', () => {
+                    const isVis = contentDiv.style.display !== 'none';
+                    contentDiv.style.display = isVis ? 'none' : 'block';
+                    const icon = header.querySelector('.toggle-icon');
+                    if(icon) icon.innerText = isVis ? '▶' : '▼';
+                });
+            }
+        });
+        
+        // Initialisierung: KI Vorschläge, Autocomplete
+        loadProfile();
+        updateKIPhraseSuggestions();
+        generateAutocompleteSuggestions();
+        // Wenn eine Phrase im Textfeld über die Vorschläge eingefügt wird, wird recordPhraseUsage schon aufgerufen.
+    })();
+</script>
 </body>
 </html>
