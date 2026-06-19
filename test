@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>Lernende KI-Kommunikationshilfe | Personalisiert & Kontextbewusst</title>
+    <title>Sofort-Sprecher | KI-Kommunikation</title>
     <style>
         * {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
-
         body {
             margin: 0;
             padding: 12px;
@@ -17,7 +16,6 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             touch-action: manipulation;
         }
-
         .app {
             max-width: 900px;
             margin: 0 auto;
@@ -25,8 +23,6 @@
             flex-direction: column;
             gap: 16px;
         }
-
-        /* Karten */
         .card {
             background: rgba(255, 255, 255, 0.96);
             border-radius: 48px;
@@ -34,7 +30,6 @@
             overflow: hidden;
             border: 1px solid rgba(0,0,0,0.05);
         }
-
         .card-header {
             display: flex;
             justify-content: space-between;
@@ -49,8 +44,6 @@
         .card-header:active { background: #e9e9ef; }
         .toggle-icon { font-size: 2rem; width: 48px; text-align: center; }
         .card-content { padding: 20px 18px; display: block; }
-
-        /* Riesen-Buttons & Eingabe */
         .gaze-btn {
             background: #1c1c1e;
             color: white;
@@ -68,7 +61,6 @@
         }
         .gaze-btn:active { transform: scale(0.96); background: #3a3a3e; }
         .button-row { display: flex; flex-wrap: wrap; gap: 14px; margin: 12px 0; align-items: center; }
-
         .big-textfield {
             width: 100%;
             padding: 20px;
@@ -80,8 +72,6 @@
             resize: vertical;
             min-height: 140px;
         }
-
-        /* Autocomplete Vorschläge */
         .autocomplete-suggestions {
             display: flex;
             flex-wrap: wrap;
@@ -94,12 +84,7 @@
             padding: 12px 22px;
             font-size: 1.1rem;
             cursor: pointer;
-            transition: 0.05s linear;
-            touch-action: manipulation;
         }
-        .suggestion-chip:active { background: #c0c0c6; transform: scale(0.96); }
-
-        /* KI-Phrasen Panel */
         .phrase-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -115,7 +100,6 @@
             font-size: 1rem;
             min-height: 70px;
         }
-
         .context-bar {
             background: #eef2ff;
             border-radius: 60px;
@@ -126,13 +110,7 @@
             align-items: center;
             margin-bottom: 16px;
         }
-        .context-badge {
-            background: #4f6f8f;
-            color: white;
-            border-radius: 40px;
-            padding: 8px 18px;
-            font-size: 0.9rem;
-        }
+        .context-badge { background: #4f6f8f; color: white; border-radius: 40px; padding: 8px 18px; }
         select, .small-select {
             background: white;
             border-radius: 60px;
@@ -140,7 +118,6 @@
             font-size: 1rem;
             border: 1px solid #aaa;
         }
-
         .voice-panel {
             background: #f0f0f4;
             border-radius: 80px;
@@ -157,37 +134,36 @@
 <body>
 <div class="app">
 
-    <!-- Hauptbereich: Text & Vorlesen + Autocomplete + KI-Phrasenvorschläge -->
+    <!-- Hauptbereich: Textfeld + Vorlesen + Autocomplete -->
     <div class="card">
         <div class="card-header" data-toggle="secMain">
-            <span>🧠 KI-Textassistent & Vorlesen</span>
+            <span>🧠 KI-Textassistent</span>
             <span class="toggle-icon">▼</span>
         </div>
         <div class="card-content" id="secMainContent">
-            <textarea id="mainText" class="big-textfield" placeholder="Schreibe oder tippe... KI schlägt Wörter vor und lernt mit dir."></textarea>
+            <textarea id="mainText" class="big-textfield" placeholder="Text eingeben – oder direkt Buttons unten nutzen."></textarea>
             <div class="autocomplete-suggestions" id="autocompleteSuggestions"></div>
-            
             <div class="voice-panel">
                 <span>🗣️ Stimme</span>
                 <select id="voiceSelect"></select>
                 <div class="status" id="voiceStatus">✅ gespeichert</div>
             </div>
             <div class="button-row">
-                <button id="readBtn" class="gaze-btn">🔊 Vorlesen</button>
+                <button id="readBtn" class="gaze-btn">🔊 Text vorlesen</button>
                 <button id="stopBtn" class="gaze-btn" style="background:#5e5e66;">⏹️ Stopp</button>
             </div>
         </div>
     </div>
 
-    <!-- Kontextbewusste KI-Phrasenvorschläge (dynamisch + lernend) -->
+    <!-- KI-Phrasenvorschläge (lernend & kontextbewusst) – JEDER BUTTON SPRICHT SOFORT -->
     <div class="card">
         <div class="card-header" data-toggle="secPhrases">
-            <span>✨ KI-Phrasenvorschläge (lernend & kontextbewusst)</span>
+            <span>✨ KI-Phrasen – Sofort sprechen (lernend)</span>
             <span class="toggle-icon">▼</span>
         </div>
         <div class="card-content" id="secPhrasesContent">
             <div class="context-bar">
-                <span>📌 Aktueller Kontext:</span>
+                <span>📌 Kontext:</span>
                 <span id="currentContextBadge" class="context-badge">Alltag</span>
                 <select id="contextSelect">
                     <option value="alltag">🏠 Alltag</option>
@@ -198,13 +174,13 @@
                 <button id="resetProfileBtn" class="gaze-btn" style="background:#a55; padding:8px 20px; min-height:50px;">🔄 Profil zurücksetzen</button>
             </div>
             <div id="kiPhraseContainer" class="phrase-grid">
-                <!-- Dynamische KI-Phrasen werden hier geladen -->
+                <!-- Dynamische Buttons – jeder spricht sofort beim Klick -->
             </div>
-            <small>💡 Diese Vorschläge lernen von dir: Je öfter du eine Phrase verwendest, desto öfter taucht sie auf. Der Kontext beeinflusst die Auswahl.</small>
+            <small>💡 Jeder Button spricht die Phrase sofort – und lernt von dir: häufige Phrasen tauchen öfter auf.</small>
         </div>
     </div>
 
-    <!-- Telefonat-Schnellsprech & Sprachnachrichten + Notfall (wie bisher) -->
+    <!-- Telefon-Schnellsprech + Sprachnachricht (alle Buttons sprechen sofort) -->
     <div class="card">
         <div class="card-header" data-toggle="secPhone">
             <span>📞 Telefon-Soforthilfe & Sprachnachricht</span>
@@ -212,10 +188,10 @@
         </div>
         <div class="card-content" id="secPhoneContent">
             <div class="phrase-grid" id="quickPhoneGrid">
-                <!-- Dynamische Buttons werden gleich eingefügt, bleiben aber fix -->
+                <!-- Wird dynamisch befüllt, jeder Button spricht sofort -->
             </div>
             <div class="button-row">
-                <button id="customPhoneBtn" class="gaze-btn" style="background:#e67e22;">➕ Eigene Phrase (aus Textfeld)</button>
+                <button id="customPhoneBtn" class="gaze-btn" style="background:#e67e22;">➕ Eigene Phrase (aus Textfeld) – sofort</button>
                 <button id="createAudioShare" class="gaze-btn" style="background:#007a5e;">🎤 Text → Sprachnachricht</button>
                 <button id="shareAudioBtn" class="gaze-btn" style="background:#5856d6;">📤 Teilen</button>
             </div>
@@ -223,10 +199,10 @@
         </div>
     </div>
 
-    <!-- Notfall + Extra -->
+    <!-- Notfall – sofort sprechen -->
     <div class="card emergency-card" style="border-left: 8px solid #ff5e00;">
         <div class="card-header" data-toggle="secEmergency">
-            <span>🆘 NOTFALL & unkomplizierte Hilfe</span>
+            <span>🆘 NOTFALL – sofort sprechen</span>
             <span class="toggle-icon">▼</span>
         </div>
         <div class="card-content" id="secEmergencyContent">
@@ -234,34 +210,25 @@
                 <button class="gaze-btn emergencyBtn" data-emg="Ich brauche sofort Hilfe! Notruf.">🚨 Notruf</button>
                 <button class="gaze-btn emergencyBtn" data-emg="Medizinischer Notfall, bitte kommen Sie schnell.">🩺 Medizin</button>
                 <button class="gaze-btn emergencyBtn" data-emg="Kann mir jemand helfen? Ich kann nicht sprechen.">🗣️ Kommunikation</button>
+                <button class="gaze-btn emergencyBtn" data-emg="Bitte kontaktieren Sie meine Notfallkontakte.">📞 Kontakt</button>
             </div>
-            <button id="customEmergencyBtn" class="gaze-btn" style="background:#d00000;">🔴 Eigene Notfall-Ansage</button>
+            <button id="customEmergencyBtn" class="gaze-btn" style="background:#d00000;">🔴 Eigene Notfall-Ansage (sofort)</button>
         </div>
     </div>
 </div>
 
 <script>
     (function() {
-        // ---------- LERNENDES PERSONALISIERUNGS-PROFIL (localStorage) ----------
-        let usageProfile = {
-            phraseStats: {},  // { "phrase": count }
-            contextHistory: []
-        };
+        // ---------- LERNENDES PROFIL ----------
+        let usageProfile = { phraseStats: {}, contextHistory: [] };
         const STORAGE_KEY = "kiCommProfile";
         function loadProfile() {
             const saved = localStorage.getItem(STORAGE_KEY);
-            if(saved) {
-                try {
-                    usageProfile = JSON.parse(saved);
-                } catch(e) {}
-            }
+            if(saved) { try { usageProfile = JSON.parse(saved); } catch(e) {} }
             if(!usageProfile.phraseStats) usageProfile.phraseStats = {};
             if(!usageProfile.contextHistory) usageProfile.contextHistory = [];
         }
-        function saveProfile() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(usageProfile));
-        }
-        // Eine Phrase verwenden (lernen)
+        function saveProfile() { localStorage.setItem(STORAGE_KEY, JSON.stringify(usageProfile)); }
         function recordPhraseUsage(phrase, context) {
             if(!phrase || phrase.trim().length === 0) return;
             const key = phrase.trim().toLowerCase();
@@ -269,13 +236,10 @@
             usageProfile.contextHistory.unshift({ phrase: phrase, context: context, timestamp: Date.now() });
             if(usageProfile.contextHistory.length > 100) usageProfile.contextHistory.pop();
             saveProfile();
-            // Aktualisiere die KI-Vorschläge (wenn aktueller Kontext)
-            updateKIPhraseSuggestions();
         }
         
-        // ----- KI-Vorschläge: Basierend auf Kontext + häufig genutzte Phrasen (Top 6)
+        // ----- KI-Phrasen (kontextbasiert + personalisiert) -----
         function getTopPhrasesByContext(context, limit = 6) {
-            // Basis-Phrasen für Kontexte + persönliche meistgenutzte
             const contextPhrases = {
                 alltag: ["Wie geht es dir?", "Ich bin müde.", "Lass uns etwas essen.", "Danke für deine Hilfe.", "Ich brauche eine Pause.", "Schönen Tag noch!"],
                 telefon: ["Kann ich Sie später zurückrufen?", "Einen Moment bitte.", "Könnten Sie das wiederholen?", "Ja, verstanden.", "Nein, danke.", "Auf Wiederhören."],
@@ -283,12 +247,10 @@
                 arbeit: ["Das ist erledigt.", "Brauche mehr Zeit.", "Termin verschieben?", "Danke für das Meeting.", "Frage per E-Mail beantworten.", "Bis morgen!"]
             };
             let baseList = contextPhrases[context] || contextPhrases.alltag;
-            // Persönliche Top-Phrasen aus Stats (die im aktuellen Kontext benutzt wurden – wir nehmen die generell beliebtesten)
             let personalPhrases = Object.entries(usageProfile.phraseStats)
                 .sort((a,b) => b[1] - a[1])
                 .slice(0, 4)
                 .map(entry => entry[0]);
-            // Kombinieren: zuerst personal, dann base, einzigartig
             let combined = [...personalPhrases];
             for(let p of baseList) {
                 if(!combined.includes(p.toLowerCase())) combined.push(p);
@@ -307,47 +269,41 @@
                 btn.className = "gaze-btn phrase-btn";
                 btn.innerText = phrase;
                 btn.style.background = "#2c6e9e";
+                // NEU: Beim Klick sofort sprechen + in Textfeld einfügen
                 btn.addEventListener("click", () => {
-                    // Text in das Hauptfeld einfügen (oder anhängen)
+                    // Text in Textfeld einfügen (für Dokumentation)
                     const textarea = document.getElementById("mainText");
-                    const currentText = textarea.value;
-                    if(currentText.trim().length > 0 && !currentText.endsWith(" ") && !currentText.endsWith("\n")) {
-                        textarea.value = currentText + " " + phrase;
+                    let current = textarea.value;
+                    if(current.trim().length > 0 && !current.endsWith(" ") && !current.endsWith("\n")) {
+                        textarea.value = current + " " + phrase;
                     } else {
-                        textarea.value = currentText + phrase;
+                        textarea.value = current + phrase;
                     }
-                    textarea.focus();
+                    // Sofort vorlesen
+                    speakText(phrase);
                     recordPhraseUsage(phrase, currentContext);
-                    // Optional: direkt vorlesen? nicht nötig, aber Nutzer kann selbst vorlesen.
-                    generateAutocompleteSuggestions(); // Aktualisiere Wortvorschläge
                 });
                 container.appendChild(btn);
             });
         }
         
-        // ---------- Vorausschauende Texteingabe (Autocomplete) basierend auf personalisiertem Wörterbuch + Standardwörtern ----------
-        let commonWords = ["ich", "du", "er", "sie", "wir", "ihr", "sie", "haben", "sein", "werden", "können", "möchten", "bitte", "danke", "ja", "nein", "vielleicht", "heute", "morgen", "gestern", "Termin", "Arzt", "Hilfe", "Telefon", "Nachricht"];
+        // ---------- Autocomplete (vorausschauende Texteingabe) ----------
+        let commonWords = ["ich", "du", "er", "sie", "wir", "ihr", "haben", "sein", "werden", "können", "möchten", "bitte", "danke", "ja", "nein", "heute", "morgen", "Termin", "Arzt", "Hilfe", "Telefon"];
         function getPersonalWords() {
-            // Wörter aus den genutzten Phrasen extrahieren
             let wordsSet = new Set(commonWords);
             for(let phrase in usageProfile.phraseStats) {
-                let parts = phrase.split(/\s+/);
-                parts.forEach(w => { if(w.length > 2) wordsSet.add(w.toLowerCase()); });
+                phrase.split(/\s+/).forEach(w => { if(w.length > 2) wordsSet.add(w.toLowerCase()); });
             }
             return Array.from(wordsSet);
         }
-        
         function generateAutocompleteSuggestions() {
             const textarea = document.getElementById("mainText");
             const container = document.getElementById("autocompleteSuggestions");
             let value = textarea.value;
             let lastWordMatch = value.match(/(\S+)$/);
-            if(!lastWordMatch) { container.innerHTML = ""; return; }
+            if(!lastWordMatch || lastWordMatch[1].length < 2) { container.innerHTML = ""; return; }
             let lastWord = lastWordMatch[1].toLowerCase();
-            if(lastWord.length < 2) { container.innerHTML = ""; return; }
-            const wordBank = getPersonalWords();
-            let matches = wordBank.filter(w => w.startsWith(lastWord)).slice(0, 5);
-            if(matches.length === 0) { container.innerHTML = ""; return; }
+            let matches = getPersonalWords().filter(w => w.startsWith(lastWord)).slice(0, 5);
             container.innerHTML = "";
             matches.forEach(match => {
                 let chip = document.createElement("div");
@@ -355,8 +311,7 @@
                 chip.innerText = match;
                 chip.addEventListener("click", () => {
                     let current = textarea.value;
-                    let newVal = current.replace(/(\S+)$/, match);
-                    textarea.value = newVal;
+                    textarea.value = current.replace(/(\S+)$/, match);
                     textarea.focus();
                     generateAutocompleteSuggestions();
                 });
@@ -364,15 +319,11 @@
             });
         }
         
-        // ---------- Globale Sprach- und UI-Funktionen (Vorlesen, Stimme etc.) ----------
+        // ---------- Sprachausgabe (zentrale Funktion) ----------
         let currentUtterance = null;
         let selectedVoice = null;
-        let lastShareBlob = null;
-        
         const textarea = document.getElementById("mainText");
         const voiceSelect = document.getElementById("voiceSelect");
-        const readBtn = document.getElementById("readBtn");
-        const stopBtn = document.getElementById("stopBtn");
         const voiceStatusSpan = document.getElementById("voiceStatus");
         
         function populateVoices() {
@@ -397,7 +348,7 @@
             voiceStatusSpan.innerText = selectedVoice ? `🎤 ${selectedVoice.name}` : "Standard";
         }
         function speakText(text) {
-            if(!text.trim()) text = "Bitte Text eingeben.";
+            if(!text || text.trim() === "") return;
             stopSpeaking();
             const utterance = new SpeechSynthesisUtterance(text);
             if(selectedVoice) utterance.voice = selectedVoice;
@@ -407,17 +358,26 @@
             utterance.onend = () => { currentUtterance = null; };
             speechSynthesis.speak(utterance);
         }
-        function stopSpeaking() { if(speechSynthesis.speaking || speechSynthesis.pending) speechSynthesis.cancel(); currentUtterance = null; }
-        function playPhrase(phrase) { stopSpeaking(); const utter = new SpeechSynthesisUtterance(phrase); if(selectedVoice) utter.voice = selectedVoice; speechSynthesis.speak(utter); recordPhraseUsage(phrase, currentContext); }
+        function stopSpeaking() {
+            if(speechSynthesis.speaking || speechSynthesis.pending) speechSynthesis.cancel();
+            currentUtterance = null;
+        }
+        // Sofort-Phrase mit Lernen
+        function playAndLearn(phrase) {
+            if(!phrase) return;
+            speakText(phrase);
+            recordPhraseUsage(phrase, currentContext);
+        }
         
-        readBtn.addEventListener('click', () => speakText(textarea.value));
-        stopBtn.addEventListener('click', stopSpeaking);
-        voiceSelect.addEventListener('change', updateSelectedVoice);
+        // ---------- Event-Listener ----------
+        document.getElementById("readBtn").addEventListener("click", () => speakText(textarea.value));
+        document.getElementById("stopBtn").addEventListener("click", stopSpeaking);
+        voiceSelect.addEventListener("change", updateSelectedVoice);
         if(speechSynthesis.onvoiceschanged) speechSynthesis.onvoiceschanged = populateVoices;
         populateVoices();
-        textarea.addEventListener('input', generateAutocompleteSuggestions);
+        textarea.addEventListener("input", generateAutocompleteSuggestions);
         
-        // ---------- Kontextauswahl ----------
+        // Kontextwechsel
         const contextSelect = document.getElementById("contextSelect");
         const contextBadge = document.getElementById("currentContextBadge");
         contextSelect.addEventListener("change", (e) => {
@@ -430,10 +390,10 @@
             saveProfile();
             updateKIPhraseSuggestions();
             generateAutocompleteSuggestions();
-            alert("Persönliches Sprachprofil wurde zurückgesetzt.");
+            alert("Persönliches Profil zurückgesetzt.");
         });
         
-        // ----- Telefon-Buttons (fix + zusätzlich dynamisch) -----
+        // ----- Telefon-Buttons (sofort sprechen) -----
         const quickPhoneGrid = document.getElementById("quickPhoneGrid");
         const quickPhones = [
             "📞 Rückruf: Kann ich Sie später zurückrufen?",
@@ -450,16 +410,17 @@
             btn.className = "gaze-btn";
             btn.innerText = emojiText;
             btn.style.background = "#3c6e71";
-            btn.addEventListener("click", () => playPhrase(phrase));
+            btn.addEventListener("click", () => playAndLearn(phrase));
             quickPhoneGrid.appendChild(btn);
         });
         document.getElementById("customPhoneBtn").addEventListener("click", () => {
             let custom = textarea.value.trim();
             if(!custom) custom = "Bitte Text eingeben.";
-            playPhrase(custom);
+            playAndLearn(custom);
         });
         
-        // Sprachnachricht
+        // ----- Sprachnachricht (wie gehabt) -----
+        let lastShareBlob = null;
         function prepareVoiceMessage() {
             const msg = textarea.value.trim();
             if(!msg) { alert("Bitte Text eingeben"); return null; }
@@ -483,20 +444,20 @@
             }
         });
         
-        // Notfall
+        // ----- Notfall (sofort sprechen) -----
         document.querySelectorAll(".emergencyBtn").forEach(btn => {
             btn.addEventListener("click", () => {
                 const msg = btn.getAttribute("data-emg");
-                if(msg) playPhrase(msg);
+                if(msg) playAndLearn(msg);
             });
         });
         document.getElementById("customEmergencyBtn").addEventListener("click", () => {
             let txt = textarea.value.trim();
             if(!txt) txt = "Ich benötige sofort Hilfe!";
-            playPhrase(txt);
+            playAndLearn(txt);
         });
         
-        // Auf-/Zuklappen
+        // ----- Auf/Zuklappen (Blick-freundlich) -----
         document.querySelectorAll('.card-header').forEach(header => {
             const targetId = header.getAttribute('data-toggle');
             let contentDiv = document.getElementById(targetId + "Content");
@@ -511,11 +472,10 @@
             }
         });
         
-        // Initialisierung: KI Vorschläge, Autocomplete
+        // Initialisierung
         loadProfile();
         updateKIPhraseSuggestions();
         generateAutocompleteSuggestions();
-        // Wenn eine Phrase im Textfeld über die Vorschläge eingefügt wird, wird recordPhraseUsage schon aufgerufen.
     })();
 </script>
 </body>
